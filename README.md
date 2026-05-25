@@ -19,6 +19,9 @@
 
 CoreQuarry is a hybrid knowledge retrieval engine which emerged in 2026 from Project Schmate (שמאטע) for re-Isearch. It unifies lexical, structural, and semantic search into a single, high-performance platform. Unlike existing vector databases or traditional search engines, it supports true positional indexing, structure-aware queries, and typed object retrieval, enabling precise and contextually-aware search over heterogeneous document corpora. By leveraging memory-mapped, append-only indexes and a two-tier address-based caching system, the engine achieves extremely low memory footprints while scaling to handle complex, hybrid RAG queries on consumer hardware, including laptops and edge devices. 
 
+## Code / Repro
+
+https://github.com/re-Isearch/CoreQuarry
 
 ## NEWS
 
@@ -46,7 +49,7 @@ This project was made possible:
 
 - Through a Grant from the Bundesministerium für Forschung, Technologie und Raumfahrt (Germany) GRANT_NUMBER: 01IS22S32 (exploring support of the IPFS and supporting remote indexing).
 
-- Through AOpenData CH/Mercator Foundation CH.
+- Through OpenData CH/Mercator Foundation CH.
 
 - Through a grant from the European Commission Coordination and Support Action (CSA) on ICT standardisation (extending support for additional post ISO-8601:2019 features).
 
