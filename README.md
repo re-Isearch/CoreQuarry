@@ -1,13 +1,13 @@
 ## This is the respositiory for CoreQuarry (re-Isearch+Schmate)
 
    Copyright 2026 Edward C. Zimmermann, NONMONOTONIC Networks, Munich, Germany
-   [http://www.nonmonotonic.net]
+   <http://www.nonmonotonic.net>
       
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
    You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+       <http://www.apache.org/licenses/LICENSE-2.0>
       
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
