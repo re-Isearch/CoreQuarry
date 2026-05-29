@@ -21,7 +21,7 @@ CoreQuarry is a hybrid knowledge retrieval engine which emerged in 2026 from Pro
 
 ## Code / Repro
 
-(https://github.com/re-Isearch/CoreQuarry)[https://github.com/re-Isearch/CoreQuarry]
+[https://github.com/re-Isearch/CoreQuarry]
 
 ## NEWS
 
