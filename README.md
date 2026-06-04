@@ -36,30 +36,22 @@ June 4 2026
 
 Now launched and published under CoreQuarry! This is a first release. There are still loads of tests so its not yet released for production. 
 
-
+<PRE>
 CoreQuarry
     The Platform
-
       ↓
-
 ib 
     The Indexing Layer
-
       ↓
-
 Schmate  (which includes HNSW)
     The Vector Retrieval Engine
-
       ↓
-
 bert.cpp / llama.cpp
     AI Components
-
       ↓
-
 ggml
     Compute Layer
-
+</PRE>
 
 
 
