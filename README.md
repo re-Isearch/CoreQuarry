@@ -1,5 +1,5 @@
 ## This is the respositiory for CoreQuarry (re-Isearch+Schmate)
-<IMG ALIGN="Right" SRC="logos/CoreQuarry_isometric_logo.svg" ALT="CoreQuarry" height=100>
+<IMG ALIGN="Right" SRC="logos/CoreQuarry_isometric_logo.svg" ALT="CoreQuarry" height=150>
 
 
    Copyright 2026 Edward C. Zimmermann, NONMONOTONIC Networks, Munich, Germany
