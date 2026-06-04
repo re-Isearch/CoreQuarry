@@ -15,7 +15,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 
-<IMG SRC="logos/CoreQuarry_isometric_logo.svg ALT="CoreQuarry" height=100>
+<IMG SRC="logos/CoreQuarry_isometric_logo.svg" ALT="CoreQuarry" height=100>
 
 ## Description
 
