@@ -32,7 +32,38 @@ It is a knowledge excavation platform.
 
 ## NEWS
 
-May 26 2023
+June 4 2026
+
+Now launched and published under CoreQuarry! This is a first release. There are still loads of tests so its not yet released for production. 
+
+
+CoreQuarry
+    The Platform
+
+      ↓
+
+ib 
+    The Indexing Layer
+
+      ↓
+
+Schmate  (which includes HNSW)
+    The Vector Retrieval Engine
+
+      ↓
+
+bert.cpp / llama.cpp
+    AI Components
+
+      ↓
+
+ggml
+    Compute Layer
+
+
+
+
+May 26 2026
 
 Hip Hip Hurrah! First beta is about to be **published**. Just a few more tests..... 
 
