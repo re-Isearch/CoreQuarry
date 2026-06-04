@@ -1,4 +1,5 @@
-## This is the respositiory for CoreQuarry (re-Isearch+Schmate)
+## This is the respositiory for CoreQuarry (re-Isearch+Schmate) <IMG SRC="logos/CoreQuarry_isometric_logo.svg" ALT="CoreQuarry" height=100>
+
 
    Copyright 2026 Edward C. Zimmermann, NONMONOTONIC Networks, Munich, Germany
    <http://www.nonmonotonic.net>
@@ -14,8 +15,6 @@
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
-
-<IMG SRC="logos/CoreQuarry_isometric_logo.svg" ALT="CoreQuarry" height=100>
 
 ## Description
 
