@@ -69,6 +69,30 @@ This is the main central repository for CoreQuary (re-Isearch) development.
 
 We use cmake.. create a build subdirectory. cmake .. and make .. Should build out of the box (easier said than done).
 
+To install models to be used system wide:
+
+Linux:<PRE>
+sudo groupadd aimodels
+sudo usermod -aG aimodels <username1>
+sudo usermod -aG aimodels <username2>
+
+sudo mkdir -p /opt/models/gguf
+sudo chown -R root:aimodels /opt/models/gguf
+sudo chmod -R 775 /opt/models/gguf
+sudo chmod g+s /opt/models/gguf # Forces new downloads to inherit 'aimodels' group </PRE>
+
+Models are stored in /opt/models/gguf
+
+MaxOS: <PRE>
+mkdir -p /Users/Shared/Models/gguf
+chmod -R 775 /Users/Shared/Models/gguf
+</PRE>
+
+Models are stored in /User/Shared/Models/gguf
+
+For user specific models (Linux, Unix, MacOS): <PRE> ~/.ib/models/ </PRE>
+
+
 ## Thanks
 
 This project was made possible:
