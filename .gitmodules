@@ -1,6 +1,6 @@
 [submodule "bert.cpp"]
 	path = bert.cpp
-	url = git@github.com:re-Isearch/git@github.com:re-Isearch/bert.cpp.git
+	url = git@github.com:re-Isearch/bert.cpp.git
 
 [submodule "Schmate"]
 	path = Schmate
