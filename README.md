@@ -24,50 +24,30 @@ CoreQuarry is not a vector data or RAG framework but a knowledge excavation plat
 CoreQuarry is not a vector database.
 - It is not a search engine.
 - It is not a RAG framework.
-It is a knowledge excavation platform.
+
+It is a knowledge excavation platform: a document-centric information retrieval platform built around document handlers, datatype-specific indexes, virtual retrieval objects, and a rich query algebra.
+
+Schmate extended this architecture with embedding datatypes and semantic retrieval while preserving the same retrieval and presentation model.
 
 ## Code / Repro
 
 <https://github.com/re-Isearch/CoreQuarry>
-
-## NEWS
-
-June 4 2026
-
-Now launched and published under CoreQuarry! This is a first release. There are still loads of tests so its not yet released for production. 
-
-<PRE>
-CoreQuarry
-    The Platform
-      ↓
-ib 
-    The Indexing Layer
-      ↓
-Schmate  (which includes HNSW)
-    The Vector Retrieval Engine
-      ↓
-bert.cpp / llama.cpp
-    AI Components
-      ↓
-ggml
-    Compute Layer
-</PRE>
-
-
-
-May 26 2026
-
-Hip Hip Hurrah! First beta is about to be **published**. Just a few more tests..... 
 
 
 ## This Repository 
 
 This is the main central repository for CoreQuary (re-Isearch) development.
 
+Its builds on three (actually four projects) of our projects: ib (re-Isearch), bert.cpp (our refactored bert.cpp), Schmate (which includes our HNSWlib fork).
+
+bert.cpp in turns builds on the ggml tensor library.
 
 ## Building, installing, developing
 
 We use cmake.. create a build subdirectory. cmake .. and make .. Should build out of the box (easier said than done).
+
+In case you don't have ggml: 
+<PRE>git clone https://github.com/ggml-org/ggml</PRE>
 
 To install models to be used system wide:
 
