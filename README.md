@@ -16,7 +16,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 
-## Why
+## Description
 
 While the Industry Consensus clamours towards Multi-Gigawatt datacenters, trillion-dollar market caps, and filling massive warehouses—if not actual outer space—with endless arrays of power-hungry GPUs. Scale at all costs.
 
@@ -25,7 +25,6 @@ I am looking the exact opposite way. I want to know: how much production-grade r
 
 The Goal: Squeezing maximum structural intelligence, deterministic precision, and state-of-the-art neural intent out of local, edge, and consumer hardware. 
 
-## Description
 <IMG ALIGN="Right" SRC="logos/CoreQuarry_isometric_logo.svg" ALT="CoreQuarry" height=150>
 CoreQuarry is a return to sane systems engineering: maximizing localized hardware to achieve identical semantic depth and absolute structural precision without a cloud tether.
 
