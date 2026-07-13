@@ -11,3 +11,6 @@
 	url = git@github.com:re-Isearch/ib.git
 
 
+[submodule "Schmate/data/lat_text_tesserae"]
+    path = Schmate/data/lat_text_tesserae
+    url = https://github.com
