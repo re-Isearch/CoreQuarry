@@ -29,7 +29,7 @@ CoreQuarry is a return to sane systems engineering: maximizing localized hardwar
 
 CoreQuarry is not a vector data or RAG framework but a knowledge excavation platform build around a novel hybrid knowledge retrieval engine which emerged in 2026 from Project Schmate (שמאטע) for re-Isearch. It unifies lexical, structural, and semantic search into a single, high-performance platform. Unlike existing vector databases or traditional search engines, it supports true positional indexing, structure-aware queries, and typed object retrieval, enabling precise and contextually-aware search over heterogeneous document corpora. By leveraging memory-mapped, append-only indexes and a two-tier address-based caching system, the engine achieves extremely low memory footprints while scaling to handle complex, hybrid RAG queries on consumer hardware, including laptops and edge devices. 
 
-See our Constitution/Manifesto (in Docs) 
+See our Constitution/Manifesto (in docs/CoreQuarryManifesto.pdf) 
 
 ## Code / Repro
 
