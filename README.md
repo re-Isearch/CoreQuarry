@@ -112,6 +112,24 @@ If you do not want to install models system-wide, you can place them inside your
 ~/.ib/models/
 ```
 
+## 📦 Submodules & Dependencies
+
+This project uses `bert.cpp`, `Schmate`, and `ib` as submodules. 
+
+### First-time Setup
+To clone this repository along with all of its required submodules, use:
+```bash
+git clone --recursive <your-repository-url>
+```
+
+### Keeping Everything Up to Date
+Because the submodules are updated frequently, running a standard `git pull` on this base repository might leave you with obsolete submodule code. 
+
+To forcefully pull the absolute latest updates from the `main` branches of all subprojects, run:
+```bash
+git submodule update --remote --merge
+```
+
 ## Thanks
 
 This project was made possible:
