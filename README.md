@@ -68,6 +68,8 @@ git clone https://github.com/ggml-org/ggml.git
 ### 2. Compilation
 We use CMake for our build system. Create a build subdirectory to compile the project (easier said than done!):
 
+We expect a compiler that support C++17+
+
 ```bash
 mkdir build && cd build
 cmake ..
