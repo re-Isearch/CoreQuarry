@@ -44,36 +44,71 @@ Its builds on three (actually four projects) of our projects: ib (re-Isearch), b
 
 bert.cpp in turns builds on the ggml tensor library.
 
-## Building, installing, developing
+## Building, Installing, and Developing
 
-We use cmake.. create a build subdirectory. cmake .. and make .. Should build out of the box (easier said than done).
+To clone the project along with the absolute latest versions of all internal submodules (`Schmate`, `bert.cpp`, and `ib`), run:
 
-In case you don't have ggml: 
-<PRE>git clone https://github.com/ggml-org/ggml</PRE>
+```bash
+git clone --recurse-submodules --remote-submodules git@github.com:re-Isearch/CoreQuarry.git
+```
 
-To install models to be used system wide:
+### 1. Build Requirements (GGML Layout)
+This project relies on `ggml`. The submodules (like `bert.cpp`) look for `ggml` using a relative symlink pointing up to the root application folder. 
 
-Linux:<PRE>
+To ensure the build system can resolve headers and objects, clone `ggml` directly into the `CoreQuarry` root directory alongside your submodules:
+
+```bash
+# Ensure you are in the CoreQuarry root folder
+cd CoreQuarry
+
+# Clone ggml so your submodule symlinks point to the right place
+git clone https://github.com/ggml-org/ggml.git
+```
+
+### 2. Compilation
+We use CMake for our build system. Create a build subdirectory to compile the project (easier said than done!):
+
+```bash
+mkdir build && cd build
+cmake ..
+make
+```
+
+### 3. Model Installation Paths
+Our software looks for `.gguf` models in specific directories depending on your operating system and configuration.
+
+#### System-Wide Sharing (Linux)
+Models are expected to be stored in `/opt/models/gguf`. To share access across multiple local development users without permission errors, run:
+
+```bash
+# Create a dedicated group for managing models
 sudo groupadd aimodels
+
+# Add developers to the group (replace <username> with actual names)
 sudo usermod -aG aimodels <username1>
 sudo usermod -aG aimodels <username2>
 
+# Set up the folder with shared group permissions
 sudo mkdir -p /opt/models/gguf
-sudo chown -R root:aimodels /opt/models/gguf
+sudo chown -R :aimodels /opt/models/gguf
 sudo chmod -R 775 /opt/models/gguf
-sudo chmod g+s /opt/models/gguf # Forces new downloads to inherit 'aimodels' group </PRE>
+```
+*(Note: Users must log out and log back in for group changes to take effect).*
 
-Models are stored in /opt/models/gguf
+#### System-Wide Sharing (macOS)
+Models are expected to be stored in `/Users/Shared/Models/gguf`. Set up the directory with shared local permissions by running:
 
-MaxOS: <PRE>
+```bash
 mkdir -p /Users/Shared/Models/gguf
 chmod -R 775 /Users/Shared/Models/gguf
-</PRE>
+```
 
-Models are stored in /User/Shared/Models/gguf
+#### User-Specific Models (Linux, Unix, macOS)
+If you do not want to install models system-wide, you can place them inside your user home directory instead. The application will automatically check:
 
-For user specific models (Linux, Unix, MacOS): <PRE> ~/.ib/models/ </PRE>
-
+```bash
+~/.ib/models/
+```
 
 ## Thanks
 

@@ -1,16 +1,15 @@
 [submodule "bert.cpp"]
 	path = bert.cpp
 	url = git@github.com:re-Isearch/bert.cpp.git
+	branch = main
 
 [submodule "Schmate"]
 	path = Schmate
 	url = git@github.com:re-Isearch/Schmate.git
+	branch = main
 
 [submodule "ib"]
 	path = ib
 	url = git@github.com:re-Isearch/ib.git
+	branch = main
 
-
-[submodule "Schmate/data/lat_text_tesserae"]
-    path = Schmate/data/lat_text_tesserae
-    url = https://github.com
