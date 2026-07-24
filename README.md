@@ -29,7 +29,25 @@ CoreQuarry is a return to sane systems engineering: maximizing localized hardwar
 
 CoreQuarry is not a vector data or RAG framework but a knowledge excavation platform build around a novel hybrid knowledge retrieval engine which emerged in 2026 from Project Schmate (שמאטע) for re-Isearch. It unifies lexical, structural, and semantic search into a single, high-performance platform. Unlike existing vector databases or traditional search engines, it supports true positional indexing, structure-aware queries, and typed object retrieval, enabling precise and contextually-aware search over heterogeneous document corpora. By leveraging memory-mapped, append-only indexes and a two-tier address-based caching system, the engine achieves extremely low memory footprints while scaling to handle complex, hybrid RAG queries on consumer hardware, including laptops and edge devices. 
 
-See our Constitution/Manifesto (in docs/CoreQuarryManifesto.pdf) 
+* CoreQuarry uses positional ranking rather than BM25-based ranking (which is just a Bag-of-Words retrieval model summing individual term contributions without concern for their position withing a corpus). Because BM25 lacks positional awareness, it cannot distinguish between different meanings that depend on word order or positional context.
+
+* Structure-Preserving Indexing: Unlike conventional vector databases and many RAG systems that flatten documents into chunks or JSON records, CoreQuarry preserves document structure during indexing. Sections, headings, positional relationships, metadata, object types, and document hierarchies remain available to the query engine.
+
+See our Constitution/Manifesto (in docs/CoreQuarryManifesto.pdf)
+
+
+## Uses
+
+This engine enables privacy-preserving, local-first AI retrieval, supporting applications in legal research, medical knowledge, industrial edge AI, and large-scale document analytics. Its small footprint and high flexibility make it uniquely suited for embedded devices, laptops, and offline environments, dramatically lowering the barrier for organizations to implement robust AI-powered search without relying on cloud services.
+
+    * No Vendor Lock-In: Reliance on a cloud provider risks catastrophic disruption if the vendor raises prices, alters their API, or goes out of business.
+    * Immutable Infrastructure: On-prem code bases can be frozen in time, ensuring that search and retrieval tools remain functional and identical for decades.
+    * Offline Resiliency: Many services must function during regional internet outages or infrastructure failures; local setups ensure internal search operations never go offline.
+    * Historical Language Tuning: Local open-source models can be custom-tuned to read archaic spellings, dead languages, or specific regional dialects without cloud filtering mechanisms blocking the content.
+    * Algorithmic Transparency: Researchers require objective, un-biased search results; local open-source retrieval pipelines allow staff to inspect the exact retrieval math, proving how an answer was generated.
+    * Designed and optimized for COTS unlike enterprise data center hardware which demand three-phase industrial power grids and specialized server room water chillers.
+
+CoreQuarry is designed to enable highly capable local AI systems with a fraction of the energy consumption of conventional cloud deployments. By enabling operation at any point on the retrieval quality–efficiency frontier, CoreQuarry allows organisations to optimise not only for accuracy and cost, but also for energy consumption, deployment constraints, and digital sovereignty requirements.
 
 ## Code / Repro
 
