@@ -1,0 +1,34 @@
+================================================================================
+Copyrights / Acknowledgements (Project History & Dependencies)
+================================================================================
+
+Project Core Ownership History:
+-------------------------------
+Copyright (c) 1994-2001 MCNC, Clearinghouse for Networked Information Discovery and Retrieval.
+Copyright (c) 1995-2011 BSn/Munich.
+Copyright (c) 1995-2001 A/WWW Enterprises, Crownsville, MD.
+Copyright (c) 2011-2020 NONMONOTONIC Networks.
+Copyright (c) 2020-2021 Edward C. Zimmermann and the re-iSearch project.
+Copyright (c) 2021-2024 ExoDAO Network Association (Zurich).
+Copyright (c) 2024-2025 re-Isearch Org.
+Copyright (c) 2026 Edward C. Zimmermann (corequarry.com).
+
+Third-Party Component Attributions:
+-----------------------------------
+This product includes software developed by Yury Malkov and the NMSLIB project 
+contributors (https://github.com/nmslib/hnswlib). 
+Original Copyright (c) 2017 Yury Malkov.
+Licensed under the Apache License, Version 2.0.
+
+This product interfaces with and requires the ggml tensor library 
+developed by Georgi Gerganov and the ggml-org contributors 
+which is licensed under the MIT License (https://github.com/ggml-org/ggml). 
+Original Copyright (c) 2023-2024 Georgi Gerganov.  Licensed under the MIT License.
+
+Algorithmic Citations:
+----------------------
+This project implements the RaBitQ quantization algorithm based on the research 
+by Jianyang Gao and Cheng Long: 
+"RaBitQ: Quantizing High-Dimensional Vectors with a Theoretical Error Bound 
+for Approximate Nearest Neighbor Search" (SIGMOD 2024).
+
