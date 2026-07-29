@@ -38,7 +38,7 @@ See our Constitution/Manifesto (in docs/CoreQuarryManifesto.pdf)
 
 ## Uses
 
-This engine enables privacy-preserving, local-first AI retrieval, supporting applications in legal research, medical knowledge, industrial edge AI, and large-scale document analytics. Its small footprint and high flexibility make it uniquely suited for embedded devices, laptops, and offline environments, dramatically lowering the barrier for organizations to implement robust AI-powered search without relying on cloud services.
+This engine enables privacy-preserving, local-first AI retrieval, supporting applications in legal research, medical knowledge, industrial edge AI, and large-scale document analytics. Its small footprint and high flexibility make it uniquely suited for embedded devices, laptops, and offline environments, dramatically lowering the barrier for organizations to implement robust AI-powered search completely insulated from foreign legal jurisdiction, cloud lock-in, and the risk of exposing sensitive intellectual property to third-party AI models.
 
 * No Vendor Lock-In: Reliance on a cloud provider risks catastrophic disruption if the vendor raises prices, alters their API, or goes out of business.
 
