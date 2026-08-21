@@ -29,6 +29,21 @@ CoreQuarry is a return to sane systems engineering: maximizing localized hardwar
 
 CoreQuarry is not a vector data or RAG framework but a knowledge excavation platform build around a novel hybrid knowledge retrieval engine which emerged in 2026 from Project Schmate (שמאטע) for re-Isearch. It unifies lexical, structural, and semantic search into a single, high-performance platform. Unlike existing vector databases or traditional search engines, it supports true positional indexing, structure-aware queries, and typed object retrieval, enabling precise and contextually-aware search over heterogeneous document corpora. By leveraging memory-mapped, append-only indexes and a two-tier address-based caching system, the engine achieves extremely low memory footprints while scaling to handle complex, hybrid RAG queries on consumer hardware, including laptops and edge devices. 
 
+Our model is especially suited to the emerging next generation of LLM and RL agent. Agents need more than keyword matching. They need to express relationships: this term occurs inside that field, these concepts appear near each other, this phrase comes before that phrase, these facts belong to the same structural element. Positional and structural operators let an agent ask about the shape of information, not merely its presence.
+
+LLMs, by contrast, tend to see retrieved text as relatively flat. Once content is turned into tokens, chunks, or embeddings, much of the original document structure—fields, containment, adjacency, order, hierarchy—can become weak or implicit. An LLM may infer those relationships, but inference is not the same as querying them precisely.
+
+Structural and positional search gives the agent a way to preserve that information before generation: retrieve the right relationship, not just the right words. For agentic search, operators such as NEAR, BEFORE, PEER, WITHIN, and field constraints are therefore not syntactic luxuries; they are tools for turning a flat language model into a much more precise information-seeking system.
+
+This is what we call "Agentic RAG 2.0”
+- RAG 1.0: retrieve chunks, then ask the LLM to reason over them.
+- Agentic RAG 2.0: let the agent actively construct and refine expressive retrieval plans using Boolean, structural, positional, scoring, and relaxation operators.
+
+The key idea is that the agent is no longer just consuming retrieved context. It is programming the retrieval process:
+"RAG gave LLMs documents. Agentic RAG 2.0 gives agents a retrieval algebra."
+
+To this end:
+
 * CoreQuarry uses positional ranking rather than BM25-based ranking (which is just a Bag-of-Words retrieval model summing individual term contributions without concern for their position withing a corpus). Because BM25 lacks positional awareness, it cannot distinguish between different meanings that depend on word order or positional context.
 
 * Structure-Preserving Indexing: Unlike conventional vector databases and many RAG systems that flatten documents into chunks or JSON records, CoreQuarry preserves document structure during indexing. Sections, headings, positional relationships, metadata, object types, and document hierarchies remain available to the query engine.
