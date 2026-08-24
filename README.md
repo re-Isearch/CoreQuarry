@@ -35,12 +35,11 @@ LLMs, by contrast, tend to see retrieved text as relatively flat. Once content i
 
 Structural and positional search gives the agent a way to preserve that information before generation: retrieve the right relationship, not just the right words. For agentic search, operators such as NEAR, BEFORE, PEER, WITHIN, and field constraints are therefore not syntactic luxuries; they are tools for turning a flat language model into a much more precise information-seeking system.
 
-This is what we call "**Agentic RAG 2.0**”
-- RAG 1.0: retrieve chunks, then ask the LLM to reason over them.
-- Agentic RAG 2.0: let the agent actively construct and refine expressive retrieval plans using Boolean, structural, positional, scoring, and relaxation operators.
+Instead of being a RAG generation upgrade, CoreQuarry is a Hybrid Knowledge Retrieval Engine. It is built to act as the mathematically precise, structurally permanent bedrock underneath whatever model generation layer you choose to run. It tracks exact physical positions of terms, SGML/XML structures, and document schemas. An agent looking for an exact structural match gets a perfect algorithmic return, while the Schmate sub-engine handles the semantic search alongside it.
 
-The key idea is that the agent is no longer just consuming retrieved context. It is programming the retrieval process:
-"RAG gave LLMs documents. Agentic RAG 2.0 gives agents a retrieval algebra."
+- This paradigm lets the agent actively construct and refine expressive retrieval plans using Boolean, structural, positional, scoring, and relaxation operators.
+- The key idea is that the agent is no longer just consuming retrieved context. It is programming the retrieval process:
+> "RAG gave LLMs documents. CoreQuarry  gives agents a retrieval algebra."
 
 To this end:
 
@@ -54,6 +53,8 @@ See our Constitution/Manifesto (in docs/CoreQuarryManifesto.pdf)
 ## Uses
 
 This engine enables privacy-preserving, local-first AI retrieval, supporting applications in legal research, medical knowledge, industrial edge AI, and large-scale document analytics. Its small footprint and high flexibility make it uniquely suited for embedded devices, laptops, and offline environments, dramatically lowering the barrier for organizations to implement robust AI-powered search completely insulated from foreign legal jurisdiction, cloud lock-in, and the risk of exposing sensitive intellectual property to third-party AI models.
+
+It is particularly well suited to workflows where agents often need to search for highly exact text like legal clauses, part numbers, or raw structural hierarchies.  It tracks exact physical positions of terms, structure and document schemas. An agent looking for an exact structural match gets a perfect algorithmic return, while the Schmate sub-engine handles the semantic search alongside it.
 
 * No Vendor Lock-In: Reliance on a cloud provider risks catastrophic disruption if the vendor raises prices, alters their API, or goes out of business.
 
