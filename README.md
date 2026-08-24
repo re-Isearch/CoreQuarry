@@ -81,7 +81,9 @@ This is the main central repository for CoreQuary (re-Isearch) development.
 
 Its builds on three (actually four projects) of our projects: ib (re-Isearch), bert.cpp (our refactored bert.cpp), Schmate (which includes our HNSWlib fork).
 
-bert.cpp in turns builds on the ggml tensor library.
+bert.cpp in turns builds on the GGML tensor library.
+
+The GGML tensor library is an open source community driven machine learning (ML) library currently centered around HuggingFace. It is written in C/C++ with a focus on Transformer inference on bare metal COTS hardware.
 
 ## Building, Installing, and Developing
 
