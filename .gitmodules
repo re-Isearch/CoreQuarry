@@ -13,3 +13,6 @@
 	url = git@github.com:re-Isearch/ib.git
 	branch = main
 
+[submodule "ggml"]
+	path = ggml
+	url = https://github.com/ggml-org/ggml.git
