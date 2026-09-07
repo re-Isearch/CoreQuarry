@@ -84,11 +84,17 @@ CoreQuarry is designed to enable highly capable local AI systems with a fraction
 
 This is the main central repository for CoreQuary (re-Isearch) development.
 
-Its builds on three (actually four projects) of our projects: ib (re-Isearch), bert.cpp (our refactored bert.cpp), Schmate (which includes our HNSWlib fork).
+Its builds on three (actually four projects) of our projects: ib (re-Isearch), bert.cpp (our refactored bert.cpp), Schmate (which includes our HNSWlib fork). While they have been designed to be used as part of a unified and complete algebraic knowledge extraction engine, its parts are also fully useable in and of themselves.
 
-bert.cpp in turns builds on the GGML tensor library.
+- **IB**:  the search kernel, provides the indexing, search and document handling services. It contains lexical and object (such as numerical etc.) indexes as well as interfaces to external stores.  It can be built and used with or without vector addtions (Schmate).
 
-The GGML tensor library is an open source community driven machine learning (ML) library currently centered around HuggingFace. It is written in C/C++ with a focus on Transformer inference on bare metal COTS hardware.
+- **Schmate**: The vector DB engine. It builds on our own bert.cpp, the standard llama.cpp as well as on our fork on the HNSWlib.
+
+- **HSNWlib**: our fork of Markov's HNSWLIB signficantly enhanced and turbo-charged for ARM. This is officially a sub-project of Schmate..
+
+- **bert.cpp**:  This module provides the BERT services for embeddings. It in turn builds on the GGML tensor library.
+
+Underneath bert.cpp/llama.cpp is the **GGML tensor library**. It is an open source community driven machine learning (ML) library currently centered around HuggingFace. It is written in C/C++ with a focus on Transformer inference on bare metal COTS hardware. We choose to build on ggml rather than ONNX Runtime for its distinct advantages in our use case-- not least of which its performace and efficiency.
 
 ## Building, Installing, and Developing
 
