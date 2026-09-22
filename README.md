@@ -112,134 +112,177 @@ modified HNSWLIB
 - **Large scientific and geospatial datasets.** Earlier versions of this engine's search core have indexed national genomic archives and observatory data, where records rarely look like tidy prose.
 - **Legal, government and archival collections**, where knowing precisely where a result came from matters as much as finding it.
 - **Edge and embedded deployments** with no spare GPU and no guaranteed network connection: field equipment, offline research stations, point-of-sale systems.
-- * Immutable Infrastructure: On-prem code bases can be frozen in time, ensuring that search and retrieval tools remain functional and identical for decades.
-- * Offline Resiliency: Many services must function during regional internet outages or infrastructure failures; local setups ensure internal search operations never go offline.
 
-CoreQuarry is designed to enable highly capable local AI systems with a fraction of the energy consumption of conventional cloud deployments. By enabling operation at any point on the retrieval quality–efficiency frontier, CoreQuarry allows organisations to optimise not only for accuracy and cost, but also for energy consumption, deployment constraints, and digital sovereignty requirements.
-
-## Code / Repro
-
-<https://github.com/re-Isearch/CoreQuarry>
+* Immutable Infrastructure: On-prem code bases can be frozen in time, ensuring that search and retrieval tools remain functional and identical for decades.
+* Offline Resiliency: Many services must function during regional internet outages or infrastructure failures; local setups ensure internal search operations never go offline.
+* CoreQuarry is designed to enable highly capable local AI systems with a fraction of the energy consumption of conventional cloud deployments. By enabling operation at any point on the retrieval quality–efficiency frontier, CoreQuarry allows organisations to optimise not only for accuracy and cost, but also for energy consumption, deployment constraints, and digital sovereignty requirements.
 
 
-## This Repository 
+## Quickstart
 
-This is the main central repository for CoreQuary (re-Isearch) development.
+This walks through building CoreQuarry and running your first search. It assumes a Unix-like system (Linux or macOS) with `git`, `cmake`, and a C++17-capable compiler already installed.
 
-Its builds on three (actually four projects) of our projects: ib (re-Isearch), bert.cpp (our refactored bert.cpp), Schmate (which includes our HNSWlib fork). While they have been designed to be used as part of a unified and complete algebraic knowledge extraction engine, its parts are also fully useable in and of themselves.
-
-- **IB**:  the search kernel, provides the indexing, search and document handling services. It contains lexical and object (such as numerical etc.) indexes as well as interfaces to external stores.  It can be built and used with or without vector addtions (Schmate).
-
-- **Schmate**: The vector DB engine. It builds on our own bert.cpp, the standard llama.cpp as well as on our fork on the HNSWlib.
-
-- **HSNWlib**: our fork of Markov's HNSWLIB signficantly enhanced and turbo-charged for ARM. This is officially a sub-project of Schmate..
-
-- **bert.cpp**:  This module provides the BERT services for embeddings. It in turn builds on the GGML tensor library.
-
-Underneath bert.cpp/llama.cpp is the **GGML tensor library**. It is an open source community driven machine learning (ML) library currently centered around HuggingFace. It is written in C/C++ with a focus on Transformer inference on bare metal COTS hardware. We choose to build on ggml rather than ONNX Runtime for its distinct advantages in our use case-- not least of which its performace and efficiency.
-
-## Building, Installing, and Developing
-
-To clone the project along with the absolute latest versions of all internal submodules (`Schmate`, `bert.cpp`, and `ib`), run:
+### 1. Get the code
 
 ```bash
-git clone --recurse-submodules --remote-submodules git@github.com:re-Isearch/CoreQuarry.git
-```
-
-### 1. Build Requirements (GGML Layout)
-This project relies on `ggml`. The submodules (like `bert.cpp`) look for `ggml` using a relative symlink pointing up to the root application folder. 
-
-To ensure the build system can resolve headers and objects, clone `ggml` directly into the `CoreQuarry` root directory alongside your submodules:
-
-```bash
-# Ensure you are in the CoreQuarry root folder
+git clone --recurse-submodules https://github.com/re-Isearch/CoreQuarry.git
 cd CoreQuarry
-
-# Clone ggml so your submodule symlinks point to the right place
-git clone https://github.com/ggml-org/ggml.git
 ```
 
-### 2. Compilation
-We use CMake for our build system. Create a build subdirectory to compile the project (easier said than done!):
+CoreQuarry is built from three of its own sub-projects (`ib`, `Schmate`, `bert.cpp`) plus the external `ggml` tensor library. `ggml` is now a pinned submodule like the rest, so the single clone command above brings in everything at a known-compatible set of versions. You don't need to clone it separately.
 
-We expect a compiler that support C++17+
+(See [What this repository is built from](#what-this-repository-is-built-from) for what each piece does.)
+
+### 2. Build it
 
 ```bash
-mkdir build && cd build
+mkdir -p build && cd build
 cmake ..
 make
+cd ..
 ```
 
-### 3. Model Installation Paths
-Our software looks for `.gguf` models in specific directories depending on your operating system and configuration.
+This produces the command-line tools inside `ib/bin/`, including `quarry`, the main entry point.
 
-#### System-Wide Sharing (Linux)
-Models are expected to be stored in `/opt/models/gguf`. To share access across multiple local development users without permission errors, run:
+
+### 3. Index something
 
 ```bash
-# Create a dedicated group for managing models
+./ib/bin/quarry index -d /tmp/corequarry-demo README.md
+```
+
+This builds an index from this repository's own `README.md` into `/tmp/corequarry-demo`. `-d` sets the index location. Point `index` at any folder of your own documents to try it on something real.
+
+## 4. Search it
+
+```bash
+./ib/bin/quarry search -d /tmp/corequarry-demo -show knowledge
+```
+
+This searches the index you just built and shows the matching passage in context. `-show` prints the hit with a snippet of surrounding text rather than just a score.
+
+This covers keyword and structural search. Semantic search layers on top once a model is configured, see [model paths](#model-paths) below, and the [Handbook](https://github.com/re-Isearch/ib/blob/main/docs/re-Isearch-Handbook.odt) in the `ib` repository for the fuller query syntax, including the agent-oriented operators mentioned above.
+
+
+## Why it works this way
+
+**Structure survives, instead of getting flattened.** Most search platforms convert a document into some intermediate form (commonly JSON), pull a few fields out of it for indexing, and store the rest as a blob to be re-parsed on every retrieval. CoreQuarry instead records where things live inside the original document and reconstructs them on request. That's also why it can take a document in as JSON and hand it back as XML: it isn't storing a copy of your JSON, it's storing the underlying structure your JSON happened to express.
+
+**Position matters.** Conventional keyword search (BM25, the ranking behind most Lucene-based tools including Elasticsearch) scores a document by counting term occurrences, with no notion of where those terms sit relative to each other. A hundred-page document with "database" on page one and "engine" on page ninety-nine scores identically to one where the two words sit side by side. CoreQuarry's own ranking accounts for position instead, so proximity and structure genuinely count towards relevance. BM25-style normalization is available too, for cases like standard IR benchmarks where that's specifically what's being measured, but it isn't the default.
+
+**Lexical and vector search share one engine, deliberately.** Most RAG pipelines embed everything into a single vector space, which tends to produce what's sometimes called semantic collapse: once a collection gets large enough, the vectors blur together and lose the distinctions that were obvious to begin with. CoreQuarry only vectorizes what actually benefits from it, typically prose fields, and gives other data types purpose-built indexes instead: phonetic matching for names, range indexes for dates, bounding boxes for geospatial data. A field only gets embedded if embedding it makes sense.
+
+
+
+**It's fast, on hardware you already have.** Benchmarked on an Apple M1 Pro (16GB RAM, no server-grade hardware) against 768-dimension vectors:
+
+| Engine | Approx. QPS |
+|---|---|
+| Elasticsearch | under 2,000 |
+| Qdrant | 1,000–3,000 |
+| Milvus | 2,000–5,000 |
+| FAISS | 5,000–10,000 |
+| CoreQuarry | 13,000 |
+
+
+On a single thread, comparing CoreQuarry's HNSW implementation directly against FAISS's own on a one-million-vector set: CoreQuarry sustains around 3,000 queries per second against FAISS's 200–600. Full methodology, further benchmarks, and results on lower-power hardware are in the [Briefing](docs/CoreQuarryBriefing.pdf).
+
+
+## What this repository is built from
+
+CoreQuarry is the meeting point of three sub-projects, each usable on its own:
+
+- **[`ib`](https://github.com/re-Isearch/ib)** is the core lexical and structural search engine, the part with the thirty-year history. It handles indexing, document structure, and query processing on its own, with no vector search required.
+- **[`Schmate`](https://github.com/re-Isearch/Schmate)** is the vector-search engine, built on `bert.cpp`, `llama.cpp`, and CoreQuarry's own fork of HNSWlib.
+- **HNSWlib** (bundled inside Schmate) started as Yury Malkov's reference implementation and has been heavily optimised and extended with SIMD instructions and quantisation support.
+- **[`bert.cpp`](https://github.com/re-Isearch/bert.cpp)** runs the embedding models that Schmate searches over, built on the [ggml](https://github.com/ggml-org/ggml) tensor library, with CUDA, Metal and Vulkan backends.
+
+
+You don't need to think about this split day to day, `quarry` ties all three together, but it explains why the build needs several repositories rather than one, and why a lexical-only deployment is possible without the vector stack at all.
+
+## Building, installing and developing
+
+If you followed the [quickstart](#quickstart) above, you already have a working build. This section covers the parts that quickstart skips: where models live on disk, keeping submodules current, and a smaller-footprint option.
+
+
+### Model paths
+
+CoreQuarry looks for `.gguf` embedding models in specific locations, depending on your setup.
+
+**System-wide on Linux**, shared across users via a dedicated group:
+
+```bash
 sudo groupadd aimodels
-
-# Add developers to the group (replace <username> with actual names)
-sudo usermod -aG aimodels <username1>
-sudo usermod -aG aimodels <username2>
-
-# Set up the folder with shared group permissions
+sudo usermod -aG aimodels <username>          # repeat per user
 sudo mkdir -p /opt/models/gguf
 sudo chown -R :aimodels /opt/models/gguf
 sudo chmod -R 775 /opt/models/gguf
 ```
-*(Note: Users must log out and log back in for group changes to take effect).*
 
-#### System-Wide Sharing (macOS)
-Models are expected to be stored in `/Users/Shared/Models/gguf`. Set up the directory with shared local permissions by running:
+
+
+Group membership only takes effect after logging out and back in.
+
+**System-wide on macOS:**
 
 ```bash
 mkdir -p /Users/Shared/Models/gguf
 chmod -R 775 /Users/Shared/Models/gguf
 ```
 
-#### User-Specific Models (Linux, Unix, macOS)
-If you do not want to install models system-wide, you can place them inside your user home directory instead. The application will automatically check:
 
-```bash
-~/.ib/models/
-```
 
-## 📦 Submodules & Dependencies
+**Per-user, on any of the above**, if you'd rather not install system-wide: place models under `~/.ib/models/`, and CoreQuarry will find them there automatically.
 
-This project uses `bert.cpp`, `Schmate`, and `ib` as submodules. 
+### Keeping submodules current
 
-### First-time Setup
-To clone this repository along with all of its required submodules, use:
-```bash
-git clone --recursive <your-repository-url>
-```
+The submodules are updated frequently. A plain `git pull` on this repository will leave them behind, so pull the latest from each submodule's `main` branch explicitly:
 
-### Keeping Everything Up to Date
-Because the submodules are updated frequently, running a standard `git pull` on this base repository might leave you with obsolete submodule code. 
-
-To forcefully pull the absolute latest updates from the `main` branches of all subprojects, run:
 ```bash
 git submodule update --remote --merge
 ```
 
+### A smaller-footprint, lexical-only build
+
+
+
+If you don't need semantic search, `ib` can be built entirely on its own, without Schmate, `bert.cpp`, or `ggml`, for a considerably smaller runtime footprint. See the [`ib` repository](https://github.com/re-Isearch/ib) for that build path directly.
+
+<!-- DRAFT NOTE for Jon: CoreQuarry's own CMakeLists.txt currently exits with a fatal error if ggml isn't present, so this lightweight path only works by building ib directly rather than through CoreQuarry's own build. Worth confirming with Edward whether a lexical-only build through CoreQuarry itself is on the roadmap, since the Briefing document advertises "lexical-only: min ~8MB" as a CoreQuarry capability, not just an ib one. -->
+
+## Learn more
+
+
+- **[Constitution](docs/CoreQuarryManifesto.pdf)**: the underlying principles behind how CoreQuarry treats data, retrieval and provenance, for anyone who wants the reasoning behind the architecture, not just the architecture.
+- **[Glossary](docs/CoreQuarryGlossary.pdf)**: short, precise definitions for the terms used across these documents (artifact, essence, provenance, and so on).
+- **[Briefing](docs/CoreQuarryBriefing.pdf)**: the full technical write-up covering architecture, benchmarking methodology, comparisons against other engines, and hardware notes.
+
 ## Thanks
 
-This project was made possible:
-
 - Through the NGI0 Commons Fund, a fund established by NLnet with financial support from the European Commission's Next Generation Internet programme, under the aegis of DG Communications Networks, Content and Technology under grant agreement No 101135429. Additional funding is made available by the Swiss State Secretariat for Education, Research and Innovation (SERI).
+- Through a grant from the Bundesministerium für Forschung, Technologie und Raumfahrt (Germany), grant number 01IS22S32, exploring support for IPFS and remote indexing.
+- Through OpenData CH / Mercator Foundation CH.
+- Through a grant from the European Commission Coordination and Support Action (CSA) on ICT standardisation, extending support for additional post-ISO-8601:2019 features.
+- Through the NGI0 Discovery Fund, a fund established by NLnet with financial support from the European Commission's Next Generation Internet programme, under the aegis of DG Communications Networks, Content and Technology, under grant agreement No 825322.
+- Additional thanks to ETH Zurich SPH, who housed the ExoDao Network Association from 2022 to 2025, and to Amazon AWS, who provided a generous hosting grant.
 
-- Through a Grant from the Bundesministerium für Forschung, Technologie und Raumfahrt (Germany) GRANT_NUMBER: 01IS22S32 (exploring support of the IPFS and supporting remote indexing).
-
-- Through OpenData CH/Mercator Foundation CH.
-
-- Through a grant from the European Commission Coordination and Support Action (CSA) on ICT standardisation (extending support for additional post ISO-8601:2019 features).
-
-- Through the NGI0 Discovery Fund, a fund established by NLnet with financial support from the European Commission's Next Generation Internet programme, under the aegis of DG Communications Networks, Content and Technology under grant agreement No 825322
-
-- Additional thanks to ETH Zurich SPH who housed ExoDao Network Association 2022-2025 and Amazon AWS who provided a generous hosting grant.
 
 
 <IMG SRC="https://nlnet.nl/image/logo_nlnet.svg" ALT="NLnet Foundation" height=100> <IMG SRC="https://nlnet.nl/logo/NGI/NGIZero-green.hex.svg" ALT="NGI0 Search" height=100> &nbsp; &nbsp; <IMG SRC="https://ngi.eu/wp-content/uploads/sites/77/2017/10/bandiera_stelle.png" ALT="EU" height=100> <IMG SRC="https://upload.wikimedia.org/wikipedia/commons/f/f3/Flag_of_Switzerland.svg" height=100>
+
+---
+
+
+
+<a id="license"></a>
+### License
+
+Copyright 2026 Edward C. Zimmermann, NONMONOTONIC Networks, Munich, Germany
+<http://www.nonmonotonic.net>
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
+
+<http://www.apache.org/licenses/LICENSE-2.0>
+
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 
