@@ -1,24 +1,48 @@
-## This is the respositiory for CoreQuarry (re-Isearch+Schmate)
+# CoreQuarry
+
+<IMG ALIGN="Right" SRC="logos/CoreQuarry_isometric_logo.svg" ALT="CoreQuarry" height=150>
+
+*A search and retrieval engine built to run on the hardware you already own.*
+
+Source: <https://github.com/re-Isearch/CoreQuarry> · Licensed under the [Apache License 2.0](#license)
+
+**Contents:** [What it is](#what-it-is) · [Why local-first](#why-local-first) · [What you get](#what-you-get) · [Where it's used](#where-its-used) · [Quickstart](#quickstart) · [Why it works this way](#why-it-works-this-way) · [What this repository is built from](#what-this-repository-is-built-from) · [Building, installing and developing](#building-installing-and-developing) · [Learn more](#learn-more) · [Thanks](#thanks)
+
+## What it is
+
+CoreQuarry is a search and retrieval engine. Point it at a folder of documents, PDFs, XML, JSON, email, source code (or whatever you have), and it indexes them without needing to flatten everything into a generic blob. It keeps track of where things sit inside a document: which paragraph, which field, which speaker, which record.
+
+That structure stays available at query time, so a search can return a phrase, the section it appeared in, the person who said it, or the record it belongs to, depending on what's being asked for.
+
+It combines three kinds of search in one engine:
+- Keyword search
+- Structural search (fields, paths, record boundaries)
+- Semantic vector search.
+
+Most tools make you stitch two or three separate systems together to get all of that. CoreQuarry treats them as one problem.
+
+And it runs *entirely on your own hardware*. No cloud service, no API key, no data leaving the building. That isn't a privacy feature bolted on afterwards; it's the reason the engine is built the way it is.
+
+It's also built to be queried by something other than a person. Alongside the usual boolean operators, CoreQuarry adds ones like `PROMOTE`, `DEMOTE`, and `MAYBE`, designed for an LLM or agent to construct and refine a search plan step by step, rather than a human typing one query and reading the results. See [Where it's used](#where-its-used) below.
+
+## Why local-first
+
+Most "AI-powered search" today means sending your documents somewhere else (a hosted vector database, an LLM provider's API, etc.) for chunking and embedding. Which means your data crosses infrastructure you don't control, sits under legal jurisdictions you might not have chosen, and depends on a vendor's pricing and API both staying the same.
+
+CoreQuarry exists to see how much of that dependency is actually necessary. It runs the full hybrid retrieval stack, keyword, structural, and semantic, on a laptop, or on something considerably smaller. We've benchmarked it on a single-board computer that draws about 50 watts.
+
+If your organization needs its search to keep working during a network outage, or needs to be certain that sensitive documents never touch a third party's servers, that's the problem this was built to solve.
 
 
-   Copyright 2026 Edward C. Zimmermann, NONMONOTONIC Networks, Munich, Germany
-   <http://www.nonmonotonic.net>
-      
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
+## What you get
 
-       <http://www.apache.org/licenses/LICENSE-2.0>
-      
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
+- **Nothing must leave your infrastructure:** Documents, queries and any embeddings you generate can stay on hardware you control.
+- **No vendor to get locked into:** There's no proprietary API to migrate away from if pricing or terms change.
+- **Works offline, indefinitely:** Useful if a service needs to survive a regional outage, or simply never has a connection to begin with.
+- **Ranking you can inspect:** You can see exactly why a result scored the way it did, rather than trust a black box.
+- **Runs on hardware you probably already have:** A laptop is enough to get started; it also runs on edge devices with a fraction of that power.
 
-## CoreQuarry: Local Bare Metal/Edge Structural Hybrid AI Search for Humans and Agents.
-
-## Description
+## Why did we develop this?
 
 The Industry Consensus seems to crave Multi-Gigawatt datacenters, trillion-dollar market caps, and filling massive warehouses—if not actual outer space—with an endless arrays of power-hungry GPUs. From worrying about climate distruption now Everyone seems busy trying to figure out how to nuclear-power a cluster of 100,000 GPUs just to parse human intent. Scale at all costs.
 
@@ -26,7 +50,6 @@ We, by contrast, are looking the exact opposite way. We want to know: how much p
 
 **The Goal**: Squeezing maximum structural intelligence, deterministic precision, and state-of-the-art neural intent out of local, edge, and consumer hardware. 
 
-<IMG ALIGN="Right" SRC="logos/CoreQuarry_isometric_logo.svg" ALT="CoreQuarry" height=150>
 CoreQuarry is a return to sane systems engineering: maximizing localized hardware to achieve identical semantic depth and absolute structural precision without a cloud tether.
 
 Retrieval-Augmented Generation (RAG) was introduced by Meta AI in 2020 to solve the issue of Large Language Models hallucinating and lacking up-to-date knowledge. It works by fetching relevant facts from an external database and merging them with the user's prompt, though early versions suffered from fragmentation and retrieval errors, leading to RAG 2.0-- adding lexical search, knowledge graphs and an agentic loop-- and lately some so-called 3.0 architectures (orchestration).  At the heart of most of these systems is a traditional structureless lexical search using an inverted index and score normalization using BM25 or TD-IDF. These systems don't use structure or position since their basic algorithms are inadaquate to the task. They build instead on the notion that a re-ranker-- most commonly Reciprocal Rank Fusion (RRF)--  can make up for the loss.  We advocate, by contrast, deterministic, context-aware structure traversal. The engine should treat  a document not as an arbitrary bag of words or vector space, but as a rigid multi-dimensional map.  A positional index acts like a persistent physical grid. It allows the generation engine to mathematically trace a fact back to its coordinates. Location-storing structural engines can map the exact geometric coordinate of every string, completely eliminating guessed or hallucinated citations.
@@ -54,24 +77,43 @@ To this end:
 
 See our Constitution/Manifesto (in docs/CoreQuarryManifesto.pdf)
 
+<PRE>
+CoreQuarry / IB
+    authoritative documents
+    fields / GP coordinates
+    deletion state
+    persistence semantics
+             |
+             v
+Schmate
+    model management
+    text reconstruction
+    embedding/chunk semantics
+    shard management
+    metadata + model identity
+    vector persistence/rescoring
+    synchronization / GC
+             |
+             v
+modified HNSWLIB
+    graph
+    ANN traversal
+    filtering/deletion hooks
+    richer vector representations
+    quantization/storage-aware spaces
+    CPU/vectorized distance machinery
+</PRE>
 
-## Uses
 
-This engine enables privacy-preserving, local-first AI retrieval, supporting applications in legal research, medical knowledge, industrial edge AI, and large-scale document analytics. Its small footprint and high flexibility make it uniquely suited for embedded devices, laptops, and offline environments, dramatically lowering the barrier for organizations to implement robust AI-powered search completely insulated from foreign legal jurisdiction, cloud lock-in, and the risk of exposing sensitive intellectual property to third-party AI models.
+## Where it's used
 
-It is particularly well suited to workflows where agents often need to search for highly exact text like legal clauses, part numbers, or raw structural hierarchies.  It tracks exact physical positions of terms, structure and document schemas. An agent looking for an exact structural match gets a perfect algorithmic return, while the Schmate sub-engine handles the semantic search alongside it.
-
-* No Vendor Lock-In: Reliance on a cloud provider risks catastrophic disruption if the vendor raises prices, alters their API, or goes out of business.
-
-* Immutable Infrastructure: On-prem code bases can be frozen in time, ensuring that search and retrieval tools remain functional and identical for decades.
-
-* Offline Resiliency: Many services must function during regional internet outages or infrastructure failures; local setups ensure internal search operations never go offline.
-
-* Historical Language Tuning: Local open-source models can be custom-tuned to read archaic spellings, dead languages, or specific regional dialects without cloud filtering mechanisms blocking the content.
-
-* Algorithmic Transparency: Researchers require objective, un-biased search results; local open-source retrieval pipelines allow staff to inspect the exact retrieval math, proving how an answer was generated.
-
-* Designed and optimized for COTS unlike enterprise data center hardware which demand three-phase industrial power grids and specialized server room water chillers.
+- **Grounding an LLM or RAG pipeline** with an exact passage instead of an arbitrary 500-byte chunk. Because CoreQuarry indexes structure rather than just text, it can hand back "the third paragraph of section four" instead of whatever window a generic chunker happened to cut.
+- **Agentic, recursive search.** An agent can issue a query, look at what came back, and narrow or redirect the next one using CoreQuarry's own operators, rather than re-embedding and re-querying a vector store from scratch each time. That's a different shape of use than a person typing one search and reading the results, and it's the direction most of the engine's recent development has gone.
+- **Large scientific and geospatial datasets.** Earlier versions of this engine's search core have indexed national genomic archives and observatory data, where records rarely look like tidy prose.
+- **Legal, government and archival collections**, where knowing precisely where a result came from matters as much as finding it.
+- **Edge and embedded deployments** with no spare GPU and no guaranteed network connection: field equipment, offline research stations, point-of-sale systems.
+- * Immutable Infrastructure: On-prem code bases can be frozen in time, ensuring that search and retrieval tools remain functional and identical for decades.
+- * Offline Resiliency: Many services must function during regional internet outages or infrastructure failures; local setups ensure internal search operations never go offline.
 
 CoreQuarry is designed to enable highly capable local AI systems with a fraction of the energy consumption of conventional cloud deployments. By enabling operation at any point on the retrieval quality–efficiency frontier, CoreQuarry allows organisations to optimise not only for accuracy and cost, but also for energy consumption, deployment constraints, and digital sovereignty requirements.
 
