@@ -2,15 +2,15 @@
 
 <IMG ALIGN="Right" SRC="logos/CoreQuarry_isometric_logo.svg" ALT="CoreQuarry" height=150>
 
-*A search and retrieval engine built to run on the hardware you already own.*
+*A hybrid search and retrieval engine built to run on the hardware you already own.*
 
 Source: <https://github.com/re-Isearch/CoreQuarry> · Licensed under the [Apache License 2.0](#license)
 
-**Contents:** [What it is](#what-it-is) · [Why local-first](#why-local-first) · [What you get](#what-you-get) · [Where it's used](#where-its-used) · [Quickstart](#quickstart) · [Why it works this way](#why-it-works-this-way) · [What this repository is built from](#what-this-repository-is-built-from) · [Building, installing and developing](#building-installing-and-developing) · [Learn more](#learn-more) · [Thanks](#thanks)
+**Contents:** [What it is](#what-it-is) · [Why local-first](#why-local-first) · [What you get](#what-you-get) · [Why did we develop this)(#why-did-we-develop-this) ·  [Where it's used](#where-its-used) · [Quickstart](#quickstart) · [Why it works this way](#why-it-works-this-way) · [What this repository is built from](#what-this-repository-is-built-from) · [Building, installing and developing](#building-installing-and-developing) · [Learn more](#learn-more) · [Thanks](#thanks)
 
 ## What it is
 
-CoreQuarry is a search and retrieval engine. Point it at a folder of documents, PDFs, XML, JSON, email, source code (or whatever you have), and it indexes them without needing to flatten everything into a generic blob. It keeps track of where things sit inside a document: which paragraph, which field, which speaker, which record.
+CoreQuarry is a hybrid search and retrieval engine. Point it at a folder of documents, PDFs, XML, JSON, email, source code (or whatever you have), and it indexes them without needing to flatten everything into a generic blob. It keeps track of where things sit inside a document: which paragraph, which field, which speaker, which record.
 
 That structure stays available at query time, so a search can return a phrase, the section it appeared in, the person who said it, or the record it belongs to, depending on what's being asked for.
 
@@ -42,7 +42,7 @@ If your organization needs its search to keep working during a network outage, o
 - **Ranking you can inspect:** You can see exactly why a result scored the way it did, rather than trust a black box.
 - **Runs on hardware you probably already have:** A laptop is enough to get started; it also runs on edge devices with a fraction of that power.
 
-## Why did we develop this?
+## Why did we develop this
 
 The Industry Consensus seems to crave Multi-Gigawatt datacenters, trillion-dollar market caps, and filling massive warehouses—if not actual outer space—with an endless arrays of power-hungry GPUs. From worrying about climate distruption now Everyone seems busy trying to figure out how to nuclear-power a cluster of 100,000 GPUs just to parse human intent. Scale at all costs.
 
@@ -113,9 +113,11 @@ modified HNSWLIB
 - **Legal, government and archival collections**, where knowing precisely where a result came from matters as much as finding it.
 - **Edge and embedded deployments** with no spare GPU and no guaranteed network connection: field equipment, offline research stations, point-of-sale systems.
 
+It delivers:
+* A powerful query algebra fusing the benefits of NoSQL, Graph and semantic search. It explicitly shifts the paradigm from simple query-response retrieval to a programmable retrieval algebra.  
 * Immutable Infrastructure: On-prem code bases can be frozen in time, ensuring that search and retrieval tools remain functional and identical for decades.
 * Offline Resiliency: Many services must function during regional internet outages or infrastructure failures; local setups ensure internal search operations never go offline.
-* CoreQuarry is designed to enable highly capable local AI systems with a fraction of the energy consumption of conventional cloud deployments. By enabling operation at any point on the retrieval quality–efficiency frontier, CoreQuarry allows organisations to optimise not only for accuracy and cost, but also for energy consumption, deployment constraints, and digital sovereignty requirements.
+* Energy Efficiency: CoreQuarry is designed to enable highly capable local AI systems with a fraction of the energy consumption of conventional cloud deployments. By enabling operation at any point on the retrieval quality–efficiency frontier, CoreQuarry allows organisations to optimise not only for accuracy and cost, but also for energy consumption, deployment constraints, and digital sovereignty requirements.
 
 
 ## Quickstart
