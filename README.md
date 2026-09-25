@@ -6,7 +6,7 @@
 
 Source: <https://github.com/re-Isearch/CoreQuarry> · Licensed under the [Apache License 2.0](#license)
 
-**Contents:** [What it is](#what-it-is) · [Why local-first](#why-local-first) · [What you get](#what-you-get) · [Why did we develop this)(#why-did-we-develop-this) ·  [Where it's used](#where-its-used) · [Quickstart](#quickstart) · [Why it works this way](#why-it-works-this-way) · [What this repository is built from](#what-this-repository-is-built-from) · [Building, installing and developing](#building-installing-and-developing) · [Learn more](#learn-more) · [Thanks](#thanks)
+**Contents:** [What it is](#what-it-is) · [Why local-first](#why-local-first) · [What you get](#what-you-get) · [Why did we develop this](#why-did-we-develop-this) ·  [Where it's used](#where-its-used) · [Quickstart](#quickstart) · [Why it works this way](#why-it-works-this-way) · [What this repository is built from](#what-this-repository-is-built-from) · [Building, installing and developing](#building-installing-and-developing) · [Learn more](#learn-more) · [Thanks](#thanks)
 
 ## What it is
 
@@ -16,7 +16,7 @@ That structure stays available at query time, so a search can return a phrase, t
 
 It combines three kinds of search in one engine:
 - Keyword search
-- Structural search (fields, paths, record boundaries)
+- Structural search (fields, paths, overlaps, record boundaries)
 - Semantic vector search.
 
 Most tools make you stitch two or three separate systems together to get all of that. CoreQuarry treats them as one problem.
@@ -62,7 +62,7 @@ LLMs, by contrast, tend to see retrieved text as relatively flat. Once content i
 
 Structural and positional search gives, by contrast, an agent a way to preserve that information before generation: retrieve the right relationship, not just the right words. For agentic search, operators such as NEAR, BEFORE, PEER, WITHIN, and field constraints are therefore not syntactic luxuries; they are tools for turning a flat language model into a much more precise information-seeking system.
 
-CoreQuarry is built to act as the mathematically precise, structurally permanent bedrock underneath whatever model generation layer you choose to run. It tracks exact physical positions of terms, structures (implicit and explicit via SGML, XML, JSON etc), and document schemas. An agent looking for an exact structural match gets a perfect algorithmic return, while the Schmate sub-engine handles the semantic search alongside it.
+CoreQuarry is built to act as the mathematically precise, structurally permanent bedrock underneath whatever model generation layer you choose to run. It tracks exact physical positions of terms, structures (implicit and explicit via SGML, XML, TAGML, JSON etc), and document schemas. An agent looking for an exact structural match gets a perfect algorithmic return, while the Schmate sub-engine handles the semantic search alongside it.
 
 - This paradigm lets the agent actively construct and refine expressive retrieval plans using Boolean, structural, positional, scoring, and relaxation operators.
 - The key idea is that the agent is no longer just consuming retrieved context. It is programming the retrieval process:
