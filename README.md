@@ -2,7 +2,7 @@
 
 <IMG ALIGN="Right" SRC="logos/CoreQuarry_isometric_logo.svg" ALT="CoreQuarry" height=150>
 
-*A hybrid search and retrieval engine built to run on the hardware you already own.*
+*A search and retrieval engine for humans and agents built to run on the hardware you already own.*
 
 Source: <https://github.com/re-Isearch/CoreQuarry> · Licensed under the [Apache License 2.0](#license)
 
@@ -10,7 +10,7 @@ Source: <https://github.com/re-Isearch/CoreQuarry> · Licensed under the [Apache
 
 ## What it is
 
-CoreQuarry is a hybrid search and retrieval engine. Point it at a folder of documents, PDFs, XML, JSON, email, source code (or whatever you have), and it indexes them without needing to flatten everything into a generic blob. It keeps track of where things sit inside a document: which paragraph, which field, which speaker, which record.
+CoreQuarry is a hybrid search and retrieval engine. Point it at a folder of documents, PDFs, Office files (such as ODF), XML, JSON, BRAT annotations, BibText, email (or nearly whatever you may have, even TAGML), and it indexes them without needing to flatten everything into a generic blob. It keeps track of where things sit inside a document: which paragraph, which field, which speaker, which record.
 
 That structure stays available at query time, so a search can return a phrase, the section it appeared in, the person who said it, or the record it belongs to, depending on what's being asked for.
 
