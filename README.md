@@ -2,7 +2,7 @@
 
 <IMG ALIGN="Right" SRC="logos/CoreQuarry_isometric_logo.svg" ALT="CoreQuarry" height=150>
 
-*A search and retrieval engine for humans and [agents](AGENTS.md) built to run on the hardware you already own.*
+*A search and retrieval engine for humans and [agents](README-AGENTS.md) built to run on the hardware you already own.*
 
 Source: <https://github.com/re-Isearch/CoreQuarry> · Licensed under the [Apache License 2.0](#license)
 
