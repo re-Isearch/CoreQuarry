@@ -1,34 +1,55 @@
-# CoreQuarry Agent Instructions
-This file defines architecture constraints, build parameters, and rules for AI coding agents modifying CoreQuarry. Always strictly adhere to these boundaries.
+# CoreQuarry Execution Manual for Autonomous Agents
 
-## 🛠️ Project Definition & Stack
-CoreQuarry is a zero-dependency, C++17 local-first hybrid search and retrieval engine. 
-* **Core Engine:** Written in pure C++ (the `ib` sub-project handles lexical/structural; `Schmate` handles vectors).
-* **Neural Math:** Runs over raw `ggml` tensors (via `bert.cpp`) targeting bare-metal local acceleration (CUDA, Metal, Vulkan).
-* **DO NOT** introduce external database containers (Milvus, Qdrant, Chroma, Docker), heavy multi-layered Python orchestration libraries (LangChain, LlamaIndex), or additional runtime networking/serialization layers.
+You are an AI Agent interacting with CoreQuarry—a local-first, coordinate-based hybrid knowledge retrieval engine. Unlike traditional databases, CoreQuarry does not use flat-vector chunking. It treats documents as structured, multi-dimensional physical maps where location and position matter.
 
-## 🚀 Build, Test, and Dependency Rules
-* **Build System:** Always use CMake.
-* **Compilation Workflow (from Root):**
-  ```bash
-  mkdir -p build && cd build
-  cmake ..
-  make -j$(nproc)
-  ```
-* **Binary Locations:** Compiled binary tools output strictly into `./ib/bin/`. The primary command-line tool is `./ib/bin/quarry`.
-* **Submodules:** CoreQuarry relies on pinned internal submodules (`ib`, `Schmate`, `bert.cpp`, `ggml`). Never download external dependencies using native package managers (apt, brew). If submodules must be brought up to date, execute:
-  ```bash
-  git submodule update --remote --merge
-  ```
+Use this manual to construct valid queries and interact with the engine via its Command Line Interface (CLI).
 
-## 🧠 Architectural & Algorithmic Guardrails
-CoreQuarry completely rejects modern "flat-vector text chunking." It treats documents as structured, multi-dimensional, continuous physical grids mapped by strict text-coordinate mathematics.
-1. **Never implement flattening or text splitting:** Do not write algorithms that break files into clean string snippets or force structural JSON into generic text blocks. 
-2. **Preserve Spatial Topomorphy:** The engine preserves absolute physical positions and schemas (headings, paragraphs, annotations, fields). 
-3. **Query Syntax Constraints:** CoreQuarry evaluates queries via a unique programmable Retrieval Algebra (supporting structural/positional relations like `BEFORE`, `NEAR`, `WITHIN`, `PEER`, `ANCESTOR`, and `NARROW`). Understand that queries default to Reverse Polish Notation (RPN) or exact structured Infix notation.
+---
 
-## 💻 CLI Integration & Agent Interaction
-* System automation and runtime code generation must interact with the engine exclusively through the `quarry` CLI.
-* **JSON Output:** When generating scripts or wrapper tools that consume results, always use the structural parsing flag `-Json` to obtain structured semantic returns. 
-* **Snippet Extraction:** Use the `-show` parameter to fetch actual underlying text regions mapping to the requested coordinate hits instead of writing arbitrary string buffers in memory.
+## 🛠️ CLI Execution Basics
+You must interact with the engine exclusively through the compiled `quarry` binary, typically located at `./ib/bin/quarry`.
+
+### Primary Search Command Structure
+```bash
+./ib/bin/quarry search -d /path/to/database [formatting_flags] [query_mode] "your_query"
+```
+
+### Essential Formatting Flags
+When calling the CLI, always append one of these flags so you can systematically parse the response:
+* `-Json` : Returns structured search results in a clean JSON payload. **(Recommended for parsing)**
+* `-XML` : Returns results wrapped in an XML-like hierarchy.
+* `-show` : Reconstructs and prints the best hit neighborhood context around the matching spatial text coordinates.
+
+---
+
+## 🧩 Dynamic Operator & DataType Discovery
+CoreQuarry supports dozens of advanced query operators and strict data types. To prevent token bloat, do not guess or halluncinate syntax. Run these diagnostic flags to dynamically retrieve full list references:
+
+* **To discover all query algebra operators:** `./ib/bin/quarry -qhelp=json`
+* **To discover command-line arguments:** `./ib/bin/quarry search -help=json`
+* **To discover database configuration options:** `./ib/bin/quarry -ohelp`
+
+---
+
+## 📐 How to Use the Retrieval Algebra
+CoreQuarry shifts the paradigm from simple query-response text matches to a programmable retrieval algebra. You must actively program the retrieval process using its specialized operators:
+
+### 1. Agent-Centric Evaluation Operators
+* **`MAYBE`** : Returns records matching both operands when possible; if no common match exists, it gracefully falls back to the larger or higher-scoring result set. Use this to protect your loops from empty context windows.
+* **`PROMOTE` / `DEMOTE`** : Dynamically adjusts document scores based on the presence of a secondary context parameter without letting that modifier contribute raw hit evidence.
+
+### 2. Spatial & Positional Operators
+Because text has physical spatiality in CoreQuarry, use these operators to navigate document architecture precisely:
+* **`WITHIN:<field>`** : Restricts your search bounds exclusively to a named tag, section, or metadata container.
+* **`BEFORE[:distance]` / `AFTER[:distance]`** : Selects hits only if terms occur in a specific continuous order within a metric scale of source tokens.
+* **`PEER` / `ANCESTOR`** : Navigates non-root structural container bounds to grab contextually connected elements (e.g., matching text inside the same paragraph element).
+
+---
+
+## 🤖 Step-by-Step Retrieval Strategy
+When executing a search loop, follow this process:
+1. **Discover:** Run `./ib/bin/quarry -qhelp=json` to check your query algebra vocabulary.
+2. **Query:** Build an explicit, structured query string using positional operators (e.g., using `-rpn` for Reverse Polish Notation or `-infix` for structural logic).
+3. **Parse:** Consume the `-Json` output to identify the exact coordinates and shapes of information.
+4. **Refine:** Do not re-embed or re-chunk text blindly. Use CoreQuarry's structural constraints (`NARROW`, `PEER`, etc.) to narrow or redirect your next query strategy recursively from the existing index.
 
