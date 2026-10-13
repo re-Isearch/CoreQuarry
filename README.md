@@ -104,6 +104,58 @@ modified HNSWLIB
     CPU/vectorized distance machinery
 </PRE>
 
+## Vectorise less — and make the vectors mean more
+
+Most RAG architectures begin with an assumption that is rarely questioned: if text can be embedded, embed it.
+Split every document into chunks, project every chunk into the same high-dimensional vector space, and use nearest-neighbour search to decide what is relevant.
+
+CoreQuarry takes a different view.
+
+A document already tells us which parts are intended to carry different kinds of meaning. In a scientific paper, for example, the abstract has a very different function from the methods section, a mathematical expression, a table, a bibliography or a paragraph containing precise domain terminology.
+
+There is no reason that all of these structures need to become vectors.
+
+We might choose to vectorise the abstract precisely because an abstract is a semantic projection of the paper. Its language is usually broader and more descriptive: it says what problem the paper addresses, what approach it takes and what it concludes. That makes it a useful bridge between the relatively general language of a user's question and the much more specialised language of the paper itself.
+
+The vector therefore does not replace the document. It locates it.
+
+Once semantic similarity has identified a promising abstract, CoreQuarry can move from semantic space back into textual space. The abstract remains anchored to the paper from which it came. Structural, positional and lexical retrieval can then locate the particular section, terminology, evidence, citation or passage required to answer the question.
+This produces a division of labour:
+
+**Vectors answer: “What is this document about?”**
+
+**Textual structure answers: “Where, exactly, is the evidence?”**
+
+This is also important for the geometry of the vector index itself.
+
+Dense embeddings typically occupy hundreds or thousands of numerical dimensions. The purpose of those dimensions is to arrange texts so that semantically related representations occur near one another. But high dimensionality does not give us unlimited semantic capacity.
+
+As a vector collection grows, several effects become important.
+
+Long or heterogeneous pieces of text must compress many meanings into a single fixed-size representation. Distinct topics can therefore be averaged together: the representation says something approximately true about the whole while becoming less discriminative about any particular part.
+
+Embedding spaces can also be anisotropic: vectors occupy some regions and directions much more densely than others rather than using the available space uniformly. And in high-dimensional nearest-neighbour spaces, some vectors can become “hubs”, appearing as near neighbours of disproportionately many queries. As the population becomes larger and more heterogeneous, neighbourhoods can therefore become increasingly crowded and similarity margins increasingly difficult to interpret.
+
+
+We can use **semantic collapse** as a practical term for the resulting loss of useful discrimination: texts which are importantly different begin to look insufficiently different to the retrieval system.
+
+Selective vectorisation attacks the problem before search even begins.
+
+Instead of filling one semantic space with every arbitrary chunk of every document, CoreQuarry can construct a smaller, semantically purposeful population of vectors over chosen structures.
+
+An abstract vector is compared with other abstract vectors.
+
+A document description can be compared with other document descriptions.
+
+A particular annotated structure can have its own semantic representation where that representation is useful.
+
+The embedding dimensionality may remain exactly the same—768 dimensions are still 768 dimensions—but the **occupancy of that space changes**. We are placing fewer, more comparable objects into it, and asking the embedding model to represent a narrower semantic function.
+
+CoreQuarry is not primarily trying to reduce the mathematical dimensionality of the embedding. It is reducing the **semantic dimensionality of the problem presented to it**.
+
+This changes vector search from the universal representation layer into one specialised operator within a larger retrieval algebra.
+
+And that may be one of the most important consequences of textual graphs: **structure allows us to decide what should become a vector, rather than assuming that everything must become one.**
 
 ## Where it's used
 
@@ -274,6 +326,16 @@ If you don't need semantic search, `ib` can be built entirely on its own, withou
 
 ---
 
+## Citation
+<PRE>
+@misc{CoreQuarry_2026,
+  author = {Edward C. Zimmermann and collaborators},
+  title = {CoreQuarry: Textual Graph Engine },
+  year = {2026},
+  howpublished = {GitHub repository},
+  url = {https://github.com/re-Isearch/CoreQuarry}
+}
+</PRE>
 
 
 <a id="license"></a>
