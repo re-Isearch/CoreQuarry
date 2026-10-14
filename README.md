@@ -306,9 +306,11 @@ If you don't need semantic search, `ib` can be built entirely on its own, withou
 
 ## 🛡️ Enterprise Security & Compliance (SOC 2 / RBAC)
 
-CoreQuarry is architected as an ultra-fast, local-first, structurally aware search kernel designed for absolute digital sovereignty. Because it compiles natively into your local environment or container architecture, CoreQuarry operates completely downstream from your corporate network boundary, inheriting the host environment’s existing SOC 2 compliance footprint, TLS encryption, and perimeter security controls.
+CoreQuarry is architected as an ultra-fast, local-first, structurally aware search kernel designed for absolute digital sovereignty. Because it compiles natively into your local environment or container architecture as a tightly scoped, self-contained binary natively inside your trusted infrastructure, it introduces no network attack vectors 
 
-User authentication and multi-tenant Role-Based Access Control (RBAC) are designed to be explicitly managed by your upstream corporate middleware (e.g., an API gateway, application proxy, or identity provider). For granular data isolation, CoreQuarry's native structural query algebra allows applications to append security metadata directly to document nodes, facilitating seamless query-time projection and document-level visibility filtering without the overhead or vulnerabilities of a remote database connection.
+Since CoreQuarry operates completely downstream from your corporate network boundary it inherits the host environment’s existing SOC 2 compliance footprint, TLS encryption, and perimeter security controls.
+
+Authentication and identity management are cleanly decoupled from the search kernel, allowing deployment teams to handle user-level RBAC at the upstream application or gateway layer. For granular data isolation, CoreQuarry's structural query algebra natively supports node-level projection and document visibility filters—allowing applications to index unified records while masking sensitive sub-structures dynamically at query time based on user roles.
 
 ## Learn more
 
