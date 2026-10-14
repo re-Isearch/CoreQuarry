@@ -304,6 +304,12 @@ If you don't need semantic search, `ib` can be built entirely on its own, withou
 
 <!-- DRAFT NOTE for Jon: CoreQuarry's own CMakeLists.txt currently exits with a fatal error if ggml isn't present, so this lightweight path only works by building ib directly rather than through CoreQuarry's own build. Worth confirming with Edward whether a lexical-only build through CoreQuarry itself is on the roadmap, since the Briefing document advertises "lexical-only: min ~8MB" as a CoreQuarry capability, not just an ib one. -->
 
+## 🛡️ Enterprise Security & Compliance (SOC 2 / RBAC)
+
+CoreQuarry is architected as an ultra-fast, local-first, structurally aware search kernel designed for absolute digital sovereignty. Because it compiles natively into your local environment or container architecture, CoreQuarry operates completely downstream from your corporate network boundary, inheriting the host environment’s existing SOC 2 compliance footprint, TLS encryption, and perimeter security controls.
+
+User authentication and multi-tenant Role-Based Access Control (RBAC) are designed to be explicitly managed by your upstream corporate middleware (e.g., an API gateway, application proxy, or identity provider). For granular data isolation, CoreQuarry's native structural query algebra allows applications to append security metadata directly to document nodes, facilitating seamless query-time projection and document-level visibility filtering without the overhead or vulnerabilities of a remote database connection.
+
 ## Learn more
 
 
