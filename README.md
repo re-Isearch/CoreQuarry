@@ -12,7 +12,7 @@ Source: <https://github.com/re-Isearch/CoreQuarry> · Licensed under the [Apache
 
 CoreQuarry is a hybrid search and retrieval engine. Point it at a folder of documents, PDFs, Office files (such as ODF), XML, JSON, BRAT annotations, BibText, email (or nearly whatever you may have, even TAGML), and it indexes them without needing to flatten everything into a generic blob. It keeps track of where things sit inside a document: which paragraph, which field, which speaker, which record. The engine exposes the full topomorphy of underlying structural architecture and relational connectivity.
 
-That structure stays available at query time, so a search can return a phrase, the section it appeared in, the person who said it, or the record it belongs to, depending on what's being asked for. We provide a powerful query algebra..
+That structure stays available at query time, so a search can return a phrase, the section it appeared in, the person who said it, or the record it belongs to, depending on what's being asked for. Everything is reduced to a single address space and spans upon which we provide a powerful query algebra..
 
 It combines three kinds of search in one engine:
 - Keyword search
@@ -52,7 +52,7 @@ We, by contrast, are looking the exact opposite way. We want to know: how much p
 
 CoreQuarry is a return to sane systems engineering: maximizing localized hardware to achieve identical semantic depth and absolute structural precision without a cloud tether.
 
-Retrieval-Augmented Generation (RAG) was introduced by Meta AI in 2020 to solve the issue of Large Language Models hallucinating and lacking up-to-date knowledge. It works by fetching relevant facts from an external database and merging them with the user's prompt, though early versions suffered from fragmentation and retrieval errors, leading to RAG 2.0-- adding lexical search, knowledge graphs and an agentic loop-- and lately some so-called 3.0 architectures (orchestration).  At the heart of most of these systems is a traditional structureless lexical search using an inverted index and score normalization using BM25 or TD-IDF. These systems don't use structure or position since their basic algorithms are inadaquate to the task. They build instead on the notion that a re-ranker-- most commonly Reciprocal Rank Fusion (RRF)--  can make up for the loss.  We advocate, by contrast, deterministic, context-aware structure traversal. The engine should treat  a document not as an arbitrary bag of words or vector space, but as a rigid multi-dimensional map.  A positional index acts like a persistent physical grid. It allows the generation engine to mathematically trace a fact back to its coordinates. Location-storing structural engines can map the exact geometric coordinate of every string, completely eliminating guessed or hallucinated citations.
+Retrieval-Augmented Generation (RAG) was introduced by Meta AI in 2020 to solve the issue of Large Language Models hallucinating and lacking up-to-date knowledge. It works by fetching relevant facts from an external database and merging them with the user's prompt, though early versions suffered from fragmentation and retrieval errors, leading to RAG 2.0-- adding lexical search, knowledge graphs and an agentic loop-- and lately some so-called 3.0 architectures (orchestration).  At the heart of most of these systems is a traditional structureless lexical search using an inverted index and score normalization using BM25 or TD-IDF. These systems don't use structure or position since their basic algorithms are inadaquate to the task. They build instead on the notion that Reciprocal Rank Fusion (RRF) and a re-ranker-- like ColBERT--  can make up for the loss.  We advocate, by contrast, deterministic, context-aware structure traversal. The engine should treat  a document not as an arbitrary bag of words or vector space, but as a rigid multi-dimensional map.  A positional index acts like a persistent physical grid. It allows the generation engine to mathematically trace a fact back to its coordinates. Location-storing structural engines can map the exact geometric coordinate of every string, completely eliminating guessed or hallucinated citations.
 
 CoreQuarry, in this sense, is not a vector data or RAG framework but a knowledge excavation platform. It is built around a novel hybrid knowledge retrieval engine which emerged in 2026 from Project Schmate (שמאטע) for re-Isearch. It unifies lexical, structural, and semantic search into a single, high-performance platform. Unlike existing vector databases or traditional search engines, it supports true positional indexing, structure-aware queries, and typed object retrieval, enabling precise and contextually-aware search over heterogeneous document corpora. By leveraging memory-mapped, append-only indexes and a two-tier address-based caching system, the engine achieves extremely low memory footprints while scaling to handle complex, hybrid RAG queries on consumer hardware, including laptops and edge devices. 
 
@@ -156,6 +156,22 @@ CoreQuarry is not primarily trying to reduce the mathematical dimensionality of 
 This changes vector search from the universal representation layer into one specialised operator within a larger retrieval algebra.
 
 And that may be one of the most important consequences of textual graphs: **structure allows us to decide what should become a vector, rather than assuming that everything must become one.**
+
+### Models
+
+Any field/path can choose from one of three embedding models-- with their own hyper-parameters-- and raw (pre-defined vectors).
+
+For example in Patent search (using 2 models):
+
+* Model #1 (General Text Model): patembed-large (GGUF). 
+- ➔ Abstract with ef_construction=200
+- ➔ Claims with ef_construction=400 (deeper search for strict legal phrasing)
+
+* Model #2 (Vision Model): Qwen3
+-  ➔ Powers HNSW Index D (Drawings field path)
+-  ➔ Powers HNSW Index E (Flowcharts field path)
+
+
 
 ## Where it's used
 
