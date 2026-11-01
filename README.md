@@ -6,7 +6,7 @@
 
 Source: <https://github.com/re-Isearch/CoreQuarry> · Licensed under the [Apache License 2.0](#license)
 
-**Contents:** [What it is](#what-it-is) · [Why local-first](#why-local-first) · [What you get](#what-you-get) · [Why did we develop this](#why-did-we-develop-this) ·  [Where it's used](#where-its-used) · [Quickstart](#quickstart) · [Why it works this way](#why-it-works-this-way) · [What this repository is built from](#what-this-repository-is-built-from) · [Building, installing and developing](#building-installing-and-developing) · [Learn more](#learn-more) · [Thanks](#thanks)
+**Contents:** [What it is](#what-it-is) · [Why local-first](#why-local-first) · [What you get](#what-you-get) · [Why did we develop this](#why-did-we-develop-this) ·  [Where it's used](#where-its-used) · [Quickstart](#quickstart) · [Why it works this way](#why-it-works-this-way) · [What this repository is built from](#what-this-repository-is-built-from) · [Building, installing and developing](#building-installing-and-developing) · [presentation](#presentation) · [Learn more](#learn-more) · [Thanks](#thanks)
 
 ## What it is
 
@@ -327,6 +327,11 @@ CoreQuarry is architected as an ultra-fast, local-first, structurally aware sear
 Since CoreQuarry operates completely downstream from your corporate network boundary it inherits the host environment’s existing SOC 2 compliance footprint, TLS encryption, and perimeter security controls.
 
 Authentication and identity management are cleanly decoupled from the search kernel, allowing deployment teams to handle user-level RBAC at the upstream application or gateway layer. For granular data isolation, CoreQuarry's structural query algebra natively supports node-level projection and document visibility filters—allowing applications to index unified records while masking sensitive sub-structures dynamically at query time based on user roles.
+
+## Presentation
+
+Stop Reranking Your Way Out of a Bad Representation by Edward C Zimmermann
+<https://www.youtube.com/watch?v=PzHVVSSS-Cg>
 
 ## Learn more
 
