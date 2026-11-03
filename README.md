@@ -6,7 +6,7 @@
 
 Source: <https://github.com/re-Isearch/CoreQuarry> · Licensed under the [Apache License 2.0](#license)
 
-**Contents:** [What it is](#what-it-is) · [Why local-first](#why-local-first) · [What you get](#what-you-get) · [Why did we develop this](#why-did-we-develop-this) ·  [Where it's used](#where-its-used) · [Quickstart](#quickstart) · [Why it works this way](#why-it-works-this-way) · [What this repository is built from](#what-this-repository-is-built-from) · [Building, installing and developing](#building-installing-and-developing) · [Learn more](#learn-more) · [Thanks](#thanks)
+**Contents:** [What it is](#what-it-is) · [Why local-first](#why-local-first) · [What you get](#what-you-get) · [Why did we develop this](#why-did-we-develop-this)  · [Why Textual Graphs](#why-textual-graphs] ·  [Where it's used](#where-its-used) · [Quickstart](#quickstart) · [Why it works this way](#why-it-works-this-way) · [What this repository is built from](#what-this-repository-is-built-from) · [Building, installing and developing](#building-installing-and-developing) · [Learn more](#learn-more) · [Thanks](#thanks)
 
 ## What it is
 
@@ -103,6 +103,28 @@ modified HNSWLIB
     quantization/storage-aware spaces
     CPU/vectorized distance machinery
 </PRE>
+
+## Why Textual Graphs
+
+Textual graphs provide semantic model to an organic, bottom-up model that respects how information is actually written.  Instead of forcing text into strict entities and predicates it treats documents, paragraphs, and words as interconnected nodes based on proximity, syntax, and shared vocabulary.
+- Zero Upfront Ontology: You completely bypass the "ontology trap." There is no need to spend months defining what a "Product" or "Employee" is. The schema is entirely self-assembling, derived directly from the source text.
+- Preserves Natural Context: Words carry nuance based on the sentences around them. By mapping document hierarchies (e.g., Document ➔ Section ➔ Paragraph ➔ Sentence), the exact context the author intended is preserved, rather than flattening it into a generic node.
+- Low Maintenance Overhead: When a document updates or a new one is added, you don't risk breaking a fragile reasoning engine. You simply re-index the file. The graph evolves naturally as your text library grows.
+- Excellent Alignment with LLMs: Modern LLMs are trained on text patterns, not databases. Passing an LLM a sub-graph of naturally written, highly relevant text paragraphs is far more effective than feeding it a string of parsed triples like [Entity] -> [Property] -> [Value].
+
+Knowledge graphs can also be represented directly in text: JSON-LD, RDF etc.
+
+1. Zero-ETL Graph Traversals
+In a traditional **"graph"** setup, you parse text, run an ETL pipeline, and load it into a graph database before you can query it.
+With serialized text graphs (like JSON-LD), the file structure itself provides the pointers. A simple recursive script or a lightweight JSON parser can immediately walk from a Subject (the root object) down to a Predicate (the key) and into the Object (the nested value or array).
+
+2. High-Fidelity Graph-to-LLM Context
+When you pass a standard knowledge graph's data to a Large Language Model, you usually have to "verbalize" it (turn triples back into sentences), which often sounds clunky.
+But formats like JSON-LD are native native languages for LLMs. Modern code-generation and reasoning models are deeply trained on JSON syntax. Passing a snippet of a JSON-LD textual graph gives the model flawless structural hierarchy and explicit semantic definitions simultaneously.
+
+3. Infinite Scalability via Fragmented Files
+Instead of hosting one massive, volatile graph database in memory, you can split your knowledge base into millions of discrete text files (e.g., one JSON-LD file per product, person, or document).
+
 
 ## Vectorise less — and make the vectors mean more
 
