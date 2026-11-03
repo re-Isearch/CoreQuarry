@@ -6,7 +6,7 @@
 
 Source: <https://github.com/re-Isearch/CoreQuarry> · Licensed under the [Apache License 2.0](#license)
 
-**Contents:** [What it is](#what-it-is) · [Why local-first](#why-local-first) · [What you get](#what-you-get) · [Why did we develop this](#why-did-we-develop-this)  · [Why Textual Graphs](#why-textual-graphs] ·  [Where it's used](#where-its-used) · [Quickstart](#quickstart) · [Why it works this way](#why-it-works-this-way) · [What this repository is built from](#what-this-repository-is-built-from) · [Building, installing and developing](#building-installing-and-developing) · [Learn more](#learn-more) · [Thanks](#thanks)
+**Contents:** [What it is](#what-it-is) · [Why local-first](#why-local-first) · [What you get](#what-you-get) · [Why did we develop this](#why-did-we-develop-this)  · [Why Textual Graphs](#why-textual-graphs) ·  [Where it's used](#where-its-used) · [Quickstart](#quickstart) · [Why it works this way](#why-it-works-this-way) · [What this repository is built from](#what-this-repository-is-built-from) · [Building, installing and developing](#building-installing-and-developing) · [Learn more](#learn-more) · [Thanks](#thanks)
 
 ## What it is
 
@@ -106,13 +106,13 @@ modified HNSWLIB
 
 ## Why Textual Graphs
 
-Textual graphs provide semantic model to an organic, bottom-up model that respects how information is actually written.  Instead of forcing text into strict entities and predicates it treats documents, paragraphs, and words as interconnected nodes based on proximity, syntax, and shared vocabulary.
-- Zero Upfront Ontology: You completely bypass the "ontology trap." There is no need to spend months defining what a "Product" or "Employee" is. The schema is entirely self-assembling, derived directly from the source text.
+They provide an organic, bottom-up model that respects how information is actually written. Instead of forcing text into strict entities and predicates it treats documents, paragraphs, and words as interconnected nodes based on proximity, syntax, and shared vocabulary.
+- Zero Upfront Ontology: They completely bypass the "ontology trap." There is no need to spend months defining what a "Product" or "Employee" is. The schema is entirely self-assembling, derived directly from the source text.
 - Preserves Natural Context: Words carry nuance based on the sentences around them. By mapping document hierarchies (e.g., Document ➔ Section ➔ Paragraph ➔ Sentence), the exact context the author intended is preserved, rather than flattening it into a generic node.
 - Low Maintenance Overhead: When a document updates or a new one is added, you don't risk breaking a fragile reasoning engine. You simply re-index the file. The graph evolves naturally as your text library grows.
 - Excellent Alignment with LLMs: Modern LLMs are trained on text patterns, not databases. Passing an LLM a sub-graph of naturally written, highly relevant text paragraphs is far more effective than feeding it a string of parsed triples like [Entity] -> [Property] -> [Value].
 
-Knowledge graphs can also be represented directly in text: JSON-LD, RDF etc.
+Knowledge graphs can also be represented directly in text: JSON-LD, RDF etc.  These formats serialize a network of interconnected triples, where every piece of data is broken down into simple, directed, labeled relationships: subject, predicate, object.
 
 1. Zero-ETL Graph Traversals
 In a traditional **"graph"** setup, you parse text, run an ETL pipeline, and load it into a graph database before you can query it.
@@ -125,6 +125,7 @@ But formats like JSON-LD are native native languages for LLMs. Modern code-gener
 3. Infinite Scalability via Fragmented Files
 Instead of hosting one massive, volatile graph database in memory, you can split your knowledge base into millions of discrete text files (e.g., one JSON-LD file per product, person, or document).
 
+Since the CoreQuarry platform (IB) is fully agnostic it can be used for any Labeled Property Graph (LPG): navigation is navigation.  Under the hood these are just spans upon a coordinate space so its just algebra.
 
 ## Vectorise less — and make the vectors mean more
 
