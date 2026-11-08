@@ -335,9 +335,12 @@ The submodules are updated frequently. A plain `git pull` on this repository wil
 git submodule update --remote --merge
 ```
 
+### Python Interfaces
+
+- <https://github.com/re-Isearch/CoreQ-Python/> · This exposes indexing, search, query algebra, result sets, metadata and source evidence to Python.
+- <https://github.com/re-Isearch/CoreQSchmate-Python/> · Schmate Standalone subsystem. Exposes embedding generation, persistent named indexes, sharding, kNN, radius, relative, adaptive and epsilon search, configuration, text reconstruction, deletion/undeletion and merging. 
+
 ### A smaller-footprint, lexical-only build
-
-
 
 If you don't need semantic search, `ib` can be built entirely on its own, without Schmate, `bert.cpp`, or `ggml`, for a considerably smaller runtime footprint. See the [`ib` repository](https://github.com/re-Isearch/ib) for that build path directly.
 
