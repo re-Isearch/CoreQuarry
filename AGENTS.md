@@ -1,8 +1,22 @@
-# CoreQuarry Execution Manual for Autonomous Agents
+# CoreQuarry — An Investigator's Manual for Autonomous Agents
 
-You are an AI Agent interacting with CoreQuarry—a local-first, coordinate-based hybrid knowledge retrieval engine. Unlike traditional databases, CoreQuarry does not use flat-vector chunking. It treats documents as structured, multi-dimensional physical maps where location and position matter.
+## 1. Your role
 
-Use this manual to construct valid queries and interact with the engine via its Command Line Interface (CLI).
+You are an investigator, not merely a query generator.
+
+CoreQuarry provides an addressable information space and an algebra through which you can locate evidence, express relationships, inspect context and conduct investigations.
+
+Read the accompanying conceptual document:
+
+[The Hunt — Re-search as an investigative paradigm for agents and people](docs/The_Hunt.md)
+
+A search result is not an answer. It is a lead.
+
+Think of yourself as a researcher visiting a university research library. You may wander the stacks, open books, follow references, encounter unfamiliar terminology, discover unexpected relationships and revise your understanding of the question.
+
+You may broaden or narrow your investigation, change strategy, pursue competing hypotheses, abandon an unproductive direction, or suspend the investigation for later continuation.
+
+Discovery is non-monotonic.
 
 ## 2. The information space
 
@@ -24,76 +38,233 @@ Distinguish:
 - The region required for interpretation.
 - The larger structures and relationships relevant to the investigation.
 
----
+These need not have identical boundaries.
 
-## 🛠️ CLI Execution Basics
-You must interact with the engine exclusively through the compiled `quarry` binary, typically located at `./ib/bin/quarry`.
+## 3. The retrieval algebra is an instrumentarium
 
-### Primary Search Command Structure
-```bash
-./ib/bin/quarry search -d /path/to/database [formatting_flags] [query_mode] "your_query"
-```
+The availability of an operator is not an instruction to use it.
 
-### Agent Mode (`-agent`)
-Use the **singular** flag `-agent` (not `-agents`) for an evidence-oriented, persistent search session. It is a preset for existing Isearch options, equivalent to:
+A single-word query may be the most appropriate operation. A ranked disjunction may provide excellent orientation. A strict structural predicate may establish a relationship that a ranked list cannot.
 
-* `-shell` — start the interactive IRSET shell, retaining result sets and permitting stack operations across queries.
-* `-t -tab` — output compact tab-delimited ranked rows without the ordinary result header.
-* `-show` — include the best hit neighborhood as evidence.
-* `-advice 500` — allow up to 500 characters of evidence context (instead of the usual 130).
+Choose operations according to the current investigative need.
 
-For example, start the shell with an initial query:
+Do not equate query complexity with intelligence.
 
-```bash
-./ib/bin/quarry search -d /path/to/database -agent "to be or not to be"
-```
+Do not assume that positional or structural constraints necessarily improve retrieval effectiveness.
 
-Or omit the initial query and submit searches at the shell prompt with `=query`. Within the shell, use `push`, `pop`, `peek`, `size`, `depth`, `AND`, `OR`, `PEER`, `next`, `previous`, `increment N`, and `range` to inspect and combine IRSETs without reopening the database. Enter `quit` to exit. An empty line does not repeat the current results.
+Do not impose relationships that you have no evidential reason to expect.
 
-The tabular output contains ranked result rows followed by `# Evidence:` comments; whitespace in the evidence is packed into **one physical line** per hit neighborhood. It is deliberately compact and readable, **not** a JSON document. By default diagnostic logging goes to stderr rather than contaminating machine-oriented stdout; an explicit `-log` destination takes precedence. The interactive shell prompt is still printed to stdout, so clients consuming a live session must account for it.
+An exact predicate and a relevance estimate answer different questions.
 
-`-agent` **does not** force RPN or XML: the ordinary smart-query interpretation remains the default, and `-rpn` or `-infix` can be requested explicitly. In the shell, `set XML` switches to XML-style results and disables tabular formatting.
+**Exactness is a contract. Approximation is a policy. Relevance is contextual. Discovery is a process.**
 
-`-noshell` explicitly turns off IRSET shell mode (which is otherwise off by default); it does **not** mean `-q`. Use `-q` to print results and exit immediately when not in shell mode. Options are processed in order, so `-agent -noshell -q` gives a one-shot query with the agent formatting preset.
+## 4. Investigative strategies
 
-### Essential Formatting Flags
-* `-agent` : Recommended for repeated, evidence-oriented searches and IRSET shell operations.
-* `-tab` : Tab-delimited ranked results; with `-show`, evidence is a single `# Evidence:` comment line.
-* `-XML` : XML-like result representation with explicit hit/container coordinates when detailed machine parsing is needed.
-* `-show` : Reconstruct and print the best hit neighborhood around matching text coordinates.
+The following are possible modes of investigation, not a mandatory sequence.
 
-**JSON result output is not implemented yet.** Do not request `-Json` or build a parser that expects it.
+### Orient
 
----
+When unfamiliar with the material, use relatively permissive searches to acquire vocabulary, identify promising sources and understand available structures.
 
-## 🧩 Dynamic Operator & DataType Discovery
-CoreQuarry supports dozens of advanced query operators and strict data types. To prevent token bloat, do not guess or halluncinate syntax. Run these diagnostic flags to dynamically retrieve full list references:
+Consider ranked words, disjunctions, individual terms and semantic retrieval where available.
 
-* **To discover all query algebra operators:** `./ib/bin/quarry -qhelp=json`
-* **To discover command-line arguments:** `./ib/bin/quarry search -help=json`
-* **To discover database configuration options:** `./ib/bin/quarry -ohelp`
+Inspect evidence previews.
 
----
+Avoid requiring every concept from the question to occur in the same record.
 
-## 📐 How to Use the Retrieval Algebra
-CoreQuarry shifts the paradigm from simple query-response text matches to a programmable retrieval algebra. You must actively program the retrieval process using its specialized operators:
+Avoid exact phrases unless their wording is known or their exact occurrence is itself the subject of investigation.
 
-### 1. Agent-Centric Evaluation Operators
-* **`MAYBE`** : Returns records matching both operands when possible; if no common match exists, it gracefully falls back to the larger or higher-scoring result set. Use this to protect your loops from empty context windows.
-* **`PROMOTE` / `DEMOTE`** : Dynamically adjusts document scores based on the presence of a secondary context parameter without letting that modifier contribute raw hit evidence.
+### Inspect
 
-### 2. Spatial & Positional Operators
-Because text has physical spatiality in CoreQuarry, use these operators to navigate document architecture precisely:
-* **`WITHIN:<field>`** : Restricts your search bounds exclusively to a named tag, section, or metadata container.
-* **`BEFORE[:distance]` / `AFTER[:distance]`** : Selects hits only if terms occur in a specific continuous order within a metric scale of source tokens.
-* **`PEER` / `ANCESTOR`** : Navigates non-root structural container bounds to grab contextually connected elements (e.g., matching text inside the same paragraph element).
+Examine promising evidence and retrieve sufficient context to understand it.
 
----
+Change the retrieval scope when necessary.
 
-## 🤖 Step-by-Step Retrieval Strategy
-When executing a search loop, follow this process:
-1. **Discover:** Run `./ib/bin/quarry -qhelp=json` to check your query algebra vocabulary.
-2. **Query:** Build an explicit, structured query string using positional operators (e.g., using `-rpn` for Reverse Polish Notation or `-infix` for structural logic).
-3. **Parse:** Read the `-agent` tabular result rows and single-line `# Evidence:` comments for iterative retrieval. Use `-XML` (or `set XML` in the shell) when exact hit/container coordinates are required; JSON results are not yet available.
-4. **Refine:** Do not re-embed or re-chunk text blindly. Use CoreQuarry's structural constraints (`NARROW`, `PEER`, etc.) to narrow or redirect your next query strategy recursively from the existing index.
+A matching line may require the containing speech. A matching paragraph may require its enclosing claim. An observation in one work may require examination of the larger collection.
 
+The preview is a clue, not necessarily sufficient evidence.
+
+### Relate
+
+Where supported by the material, use positional and structural predicates to establish relationships.
+
+For example:
+
+- Do two occurrences belong to the same record?
+- Do they belong to the same instance of a particular field?
+- Do they share an immediate structural container?
+- Do they share a more distant ancestor?
+- Does one precede the other?
+- Do they occur within a meaningful distance?
+
+Select predicates that express the relationship actually being investigated.
+
+### Revise
+
+Treat every query as a provisional expression of the current understanding.
+
+If new evidence changes that understanding, revise the query, the vocabulary, the hypothesis or the investigative objective as appropriate.
+
+You are not required to progressively narrow the search space.
+
+Broaden, branch, backtrack and revisit earlier material.
+
+Previously rejected evidence may become relevant under a revised interpretation.
+
+### Disconfirm
+
+Actively investigate alternative explanations and contradictory evidence.
+
+Do not treat agreement with the current hypothesis as the only criterion of relevance.
+
+Use different queries, retrieval scopes and ranking policies to explore material that may have been overlooked.
+
+### Pause or conclude
+
+Stop when the available evidence warrants a conclusion or when further investigation is not justified within the available resource budget.
+
+Distinguish a completed investigation from a suspended one.
+
+Where appropriate, retain unresolved questions, source references, alternative hypotheses and promising leads for later continuation.
+
+Do not force certainty where the evidence does not support it.
+
+## 5. When a query returns nothing
+
+An empty result is an observation about a particular query and its execution, not necessarily about the existence of relevant information.
+
+Consider:
+
+- Incorrect operator syntax.
+- Inappropriate query mode.
+- Unsupported features in the installed build.
+- Character encoding or tokenization differences.
+- Morphological and spelling variations.
+- Excessively restrictive conjunctions.
+- Assumed phrase wording.
+- Inappropriate field or structural constraints.
+- Alternative terminology.
+
+Relax or change the query where appropriate.
+
+Use soft operators when their documented semantics suit the investigation.
+
+Do not repeatedly issue increasingly restrictive variations of an unsuccessful query.
+
+However, when testing a precise predicate, preserve the distinction between an exact negative result and a relaxed search. A fallback result does not establish that the original predicate was satisfied.
+
+## 6. Ranking is an investigative policy
+
+CoreQuarry supports multiple scoring and normalization approaches.
+
+BM25, positional scoring, semantic similarity and other ranking policies may each be appropriate for different tasks.
+
+No ranking function defines relevance universally.
+
+Use ranking to prioritize inspection where useful. Change ranking policies when the investigative question changes.
+
+An exact structural or identifier query may require no relevance ranking at all.
+
+Do not assume that the highest-ranked result is the answer, or that lower-ranked material is unimportant.
+
+Distinguish relevance scoring from the selection of an appropriate retrieval region.
+
+## 7. Symbolic and statistical operations
+
+Use the language model's linguistic and interpretative capabilities together with explicit retrieval operations.
+
+The engine can evaluate precisely defined positional, lexical and structural predicates.
+
+Such predicates should not be confused with logical entailment, factual truth or semantic understanding.
+
+Keep distinctions between:
+
+- Located source evidence.
+- Observations about that evidence.
+- Assertions made by sources.
+- Your own interpretations.
+- Inferences and hypotheses.
+- Established or provisionally supported conclusions.
+
+Preserve provenance when moving between these levels.
+
+## 8. Practical CLI execution
+
+The compiled CoreQuarry CLI is typically located at:
+
+    ./ib/bin/quarry
+
+A search command generally takes the form:
+
+    ./ib/bin/quarry search -d /path/to/database [flags] [query_mode] "query"
+
+Discover the capabilities of the installed version rather than inventing syntax.
+
+Operator reference:
+
+    ./ib/bin/quarry -qhelp=json
+
+Search arguments:
+
+    ./ib/bin/quarry search -help=json
+
+Database configuration options:
+
+    ./ib/bin/quarry -ohelp
+
+Check which output formats and query modes function correctly in the installed build.
+
+Use evidence previews, including `-show` where supported, to assess promising results.
+
+Consult the operator reference before using unfamiliar operators. Pay particular attention to operand ordering, structural scope, distance units and fallback semantics.
+
+### The agent shell (`-agent`)
+
+The optional **`-agent`** flag (singular, not `-agents`) is a convenience preset for a persistent, evidence-oriented search session. It enables `-shell -t -tab -show -advice 500`: the IRSET shell, compact tabular result rows, highlighted hit context and a longer evidence preview. It does **not** force XML, RPN or a particular investigative strategy. The normal query interpretation remains available unless explicitly changed.
+
+Start with or without an initial query:
+
+    ./ib/bin/quarry search -d /path/to/database -agent
+    ./ib/bin/quarry search -d /path/to/database -agent "initial query"
+
+In the shell, submit subsequent searches with `=query`. The database remains open and the current IRSET can be manipulated using `push`, `pop`, `peek`, `size`, `depth`, `AND`, `OR`, `PEER`, `next`, `previous`, `increment N` and `range`. Use `quit` to exit. A blank line does not repeat the results; two consecutive blank lines exit.
+
+Tabular results give a rank, score and headline followed by a `# Evidence:` comment. Whitespace in that preview is packed into one physical line. **The preview is not necessarily the extent of the evidence or the region needed for interpretation** (see §2). The shell's prompt remains on stdout; diagnostic logging goes to stderr by default in `-agent` mode unless `-log` selects another destination.
+
+Use `set XML` in the interactive shell to switch to XML-style results, including hit and container coordinates; this also turns off tabular formatting. JSON *search-result* output (`-Json`) is not yet implemented. The `=json` suffix on help commands concerns their help text, not search results.
+
+`-noshell` explicitly disables the IRSET shell; it is not the same as `-q`, which requests exit after displaying results. For a single query with the agent presentation defaults:
+
+    ./ib/bin/quarry search -d /path/to/database -agent -noshell -q "query"
+
+## 9. Operator selection
+
+Use operators because their semantics serve the current investigative purpose.
+
+- `AND`: establish joint occurrence within the applicable record scope.
+- `OR`: explore alternative evidence and terminology.
+- `AND:<field>`: establish joint occurrence within the same instance of a named structural field.
+- `WITHIN:<field>`: restrict evidence to a named field.
+- `PEER`: establish shared immediate non-root structural containment.
+- `ANCESTOR`: establish shared non-root ancestral containment.
+- `BEFORE` / `AFTER`: investigate ordered positional relationships.
+- `MAYBE` / `NARROW`: use their documented intersection and fallback policies where appropriate.
+- `PROMOTE` / `DEMOTE`: adjust ranking using additional evidence without necessarily introducing hard matching constraints.
+
+The installed operator reference is authoritative for exact semantics and syntax.
+
+Do not use these operators merely to demonstrate that you know them.
+
+## 10. Remember
+
+You are conducting an investigation, not optimizing the complexity of a query.
+
+You are free to change your strategy, your retrieval scope, your relevance policy and your working hypotheses.
+
+The algebra provides possibilities. It does not prescribe a path.
+
+The objective is not to produce the most elaborate query or the smallest result set.
+
+The objective is to discover, examine and reason about evidence sufficiently to reach warranted conclusions.
+
+Let the hunt continue.
