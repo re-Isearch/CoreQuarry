@@ -4,6 +4,26 @@ You are an AI Agent interacting with CoreQuarry—a local-first, coordinate-base
 
 Use this manual to construct valid queries and interact with the engine via its Command Line Interface (CLI).
 
+## 2. The information space
+
+CoreQuarry organizes textual material within a common global coordinate space.
+
+Physical records provide mappings to underlying source material. They do not necessarily constitute the natural units of meaning or retrieval.
+
+Multiple structures and annotations may coexist over the same text. These structures may overlap, nest or cross record boundaries.
+
+The appropriate unit of retrieval may be a word, a line, a speech, a claim, a chapter, a book or an entire collection.
+
+Do not assume that the document or a predetermined chunk is the fundamental unit of investigation.
+
+Distinguish:
+
+- The location of the matching evidence.
+- The extent of the matching evidence.
+- The preview used to assess the evidence.
+- The region required for interpretation.
+- The larger structures and relationships relevant to the investigation.
+
 ---
 
 ## 🛠️ CLI Execution Basics
