@@ -6,9 +6,12 @@ You are an investigator, not merely a query generator.
 
 CoreQuarry provides an addressable information space and an algebra through which you can locate evidence, express relationships, inspect context and conduct investigations.
 
-Read the accompanying conceptual document:
+Read the accompanying documents:
 
-[The Hunt — Re-search as an investigative paradigm for agents and people](docs/The_Hunt.md)
+- [The Hunt — Re-search as an investigative paradigm for agents and people](docs/The_Hunt.md)
+  explains the conceptual foundations.
+- [The Hunt — Examples for Human and Artificial Investigators](docs/The_Hunt_Examples.md)
+  illustrates investigative strategies through concrete examples.
 
 A search result is not an answer. It is a lead.
 
@@ -217,6 +220,8 @@ Check which output formats and query modes function correctly in the installed b
 Use evidence previews, including `-show` where supported, to assess promising results.
 
 Consult the operator reference before using unfamiliar operators. Pay particular attention to operand ordering, structural scope, distance units and fallback semantics.
+
+For examples of selecting queries, inspecting evidence, changing retrieval scope and revising an investigation, see [The Hunt — Examples for Human and Artificial Investigators](docs/The_Hunt_Examples.md).
 
 ### The agent shell (`-agent`)
 
