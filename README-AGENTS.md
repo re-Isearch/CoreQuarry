@@ -41,7 +41,7 @@ The combination creates a richer form of RAG: semantic reasoning over context as
 
 CoreQuarry therefore provides something between text and a knowledge graph: a queryable structural representation that preserves the spatial character of text. It allows an LLM to operate not simply on retrieved passages, but on selected regions of a structured textual space.
 
-The profound advantage is not about one-shot retrieval but discovery. We call this [The Hunt](https://github.com/re-Isearch/CoreQuarry/blob/main/docs/The_Hunt.md). Agents should also consult [Hunt Examples](docs/https://github.com/re-Isearch/CoreQuarry/blob/main/docs/The_Hunt_Examples.md) for some detailed examples of how to apply this paradigm.
+The profound advantage is not about one-shot retrieval but discovery. We call this [The Hunt](https://github.com/re-Isearch/CoreQuarry/blob/main/docs/The_Hunt.md). Agents should also consult [Hunt Examples](https://github.com/re-Isearch/CoreQuarry/blob/main/docs/The_Hunt_Examples.md) for some detailed examples of how to apply this paradigm.
 
 
 ## Operators
