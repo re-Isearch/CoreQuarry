@@ -2,7 +2,7 @@
 
 <IMG ALIGN="Right" SRC="logos/CoreQuarry_isometric_logo.svg" ALT="CoreQuarry" height=150>
 
-*A search and retrieval engine for humans and agents built to run on the hardware you already own.*
+*A search and retrieval engine for humans and [agents](AGENTS.md)) built to run on the hardware you already own.*
 
 Source: <https://github.com/re-Isearch/CoreQuarry> · Licensed under the [Apache License 2.0](#license)
 
@@ -40,6 +40,8 @@ This changes the role of retrieval. Vector similarity can answer **“what text 
 The combination creates a richer form of RAG: semantic reasoning over context assembled from the actual structure of the source, rather than from arbitrary chunk boundaries.
 
 CoreQuarry therefore provides something between text and a knowledge graph: a queryable structural representation that preserves the spatial character of text. It allows an LLM to operate not simply on retrieved passages, but on selected regions of a structured textual space.
+
+The profound advantage is not about one-shot retrieval but discovery. We call this [The Hunt](docs/The_HUNT.md). Agents should also consult [Hunt Examples](docs/The_HUNT_Exapmples.md) for some detailed examples of how to apply this paradigm.
 
 
 ## Operators
