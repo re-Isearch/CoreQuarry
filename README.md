@@ -23,7 +23,7 @@ Most tools make you stitch two or three separate systems together to get all of 
 
 And it runs *entirely on your own hardware*. No cloud service, no API key, no data leaving the building. That isn't a privacy feature bolted on afterwards; it's the reason the engine is built the way it is.
 
-It's also built to be queried by something other than a person. Alongside the usual boolean operators, CoreQuarry adds ones like `PROMOTE`, `DEMOTE`, and `MAYBE`, designed for an LLM or agent to construct and refine a search plan step by step, rather than a human typing one query and reading the results. See [Where it's used](#where-its-used) below.
+It's also built to be queried by something other than a person. Alongside the usual boolean operators, CoreQuarry adds ones like `PROMOTE`, `DEMOTE`, and `MAYBE`, designed for an LLM or agent to [construct and refine a search plan step by step](https://github.com/re-Isearch/CoreQuarry/blob/main/docs/The_Hunt.md), rather than a human typing one query and reading the results. See [Where it's used](#where-its-used) below.
 
 ## Why local-first
 
